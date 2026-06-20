@@ -1,0 +1,46 @@
+---
+import Container from "./Container.astro";
+---
+
+<section id="faq" class="flex flex-col gap-4 py-32">
+  <h1 class="text-4xl font-extrabold text-center">
+    Frequently Asked Questions
+  </h1>
+  <p class="text-center text-xl text-balance font-thin">
+    Everything you need to know about Finon. Don’t see your question? <a
+      class="underline"
+      href="/support">Contact us</a
+    > .
+  </p>
+
+  <Container>
+    <div
+      class="collapse collapse-arrow bg-base-100 dark:bg-black border border-base-300"
+    >
+      <input type="radio" name="my-accordion-2" checked="checked" />
+      <h4 class="collapse-title font-semibold">Which account can I connect?</h4>
+      <p class="collapse-content text-sm">
+        We're starting with the UK's most popular banks and exchanges. We are
+        expanding this list every month based on waitlist user requests, see our
+        current connections <a
+          href="https://docs.google.com/spreadsheets/d/1pqarJN8L3lZzMCyd4eQht-kttXtz7582prEfZoM1GZM/edit?usp=sharing"
+          class="underline"
+          target="_blank">here</a
+        >.
+      </p>
+    </div>
+    <div
+      class="collapse collapse-arrow bg-base-100 dark:bg-black border border-base-300"
+    >
+      <input type="radio" name="my-accordion-2" />
+      <h4 class="collapse-title font-semibold">
+        What account types do you support?
+      </h4>
+      <p class="collapse-content text-sm">
+        We currently support bank accounts, crypto exchanges, and stock
+        platforms. We are actively working to expand into other asset classes
+        like pensions, commodities, and real estate.
+      </p>
+    </div>
+  </Container>
+</section>

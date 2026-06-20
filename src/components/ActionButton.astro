@@ -1,0 +1,14 @@
+---
+const { class: className } = Astro.props;
+
+import { Image } from "astro:assets";
+import AppleBadge from "../assets/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg";
+---
+
+<a
+  href="https://apps.apple.com/gb/app/finon/id6751505655"
+  target="_blank"
+  class={`inline-flex justify-center ${className}`}
+>
+  <Image src={AppleBadge} width={150} alt="Download on the App Store" />
+</a>

@@ -1,0 +1,60 @@
+---
+import { Mail } from "@lucide/astro";
+import DiscordIcon from "../assets/discord.svg";
+import CallToAction from "../components/CallToAction.astro";
+import Container from "../components/Container.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Support – Finon"
+  description="We're here to help you. Get the support you need, when you need it."
+>
+  <Nav />
+  <div class="pt-32 pb-16">
+    <Container>
+      <h1 class="font-bold text-4xl text-center">Support</h1>
+      <p class="text-center font-thin">
+        We're here to help you. Get the support you need, when you need it.
+      </p>
+    </Container>
+  </div>
+
+  <section>
+    <Container class="flex flex-col gap-4">
+      <h2 class="text-2xl font-bold">Contact Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <article
+          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border-[#DCDCDC] border-solid border-2 bg-black/5"
+        >
+          <Mail class="size-12" />
+          <h3 class="font-bold mb-4">Email Support</h3>
+          <p class="text-sm">Get help via email</p>
+          <a
+            href="mailto:support@finon.app"
+            class="flex gap-2 justify-center items-center"
+            ><Mail class="size-3" /><span>support@finon.app</span></a
+          >
+        </article>
+        <article
+          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border-[#DCDCDC] border-solid border-2 bg-black/5"
+        >
+          <DiscordIcon class="size-12 dark:fill-white" />
+          <h3 class="font-bold mb-4">Discord Support</h3>
+          <p class="text-sm">Join our discord and drop us a question</p>
+          <a
+            href="https://discord.gg/6Nye5rBtGf"
+            class="flex gap-2 justify-center items-center btn"
+            target="_blank">Join our server</a
+          >
+        </article>
+      </div>
+    </Container>
+  </section>
+  <FAQ />
+  <CallToAction />
+  <Footer />
+</Layout>

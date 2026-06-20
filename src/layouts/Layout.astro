@@ -1,0 +1,44 @@
+---
+import "../styles/global.css";
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Finon" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Page info -->
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Social Media Meta Tags -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.finon.app/" />
+    <meta property="og:image" content="https://www.finon.app/og-image.webp" />
+    <meta property="og:site_name" content="Finon" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="https://www.finon.app/og-image.webp" />
+
+    <!-- iOS App Meta Tags -->
+    <meta name="apple-itunes-app" content="app-id=6751505655" />
+  </head>
+  <body class="bg-white dark:bg-black">
+    <slot />
+  </body>
+</html>

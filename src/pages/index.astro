@@ -1,0 +1,102 @@
+---
+import { Image } from "astro:assets";
+import ChartImg from "../assets/images/chart_phone.png";
+import ConnectImg from "../assets/images/connections_phone.png";
+import PhoneHero from "../assets/images/hero_phones.png";
+import ActionButton from "../components/ActionButton.astro";
+import CallToAction from "../components/CallToAction.astro";
+import Card from "../components/Card.astro";
+import Container from "../components/Container.astro";
+import FAQ from "../components/FAQ.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="Finon – Your All-in-One Financial Dashboard"
+  description="Join the Finon waitlist and be the first to access your all-in-one financial dashboard. Track performance, gain insights, and stay in control of your finances from day one."
+>
+  <Nav />
+  <Container>
+    <section
+      class="grid lg:grid-cols-2 gap-15 items-center place-items-center py-32"
+    >
+      <article
+        class="flex flex-col gap-5 items-center text-center lg:text-left lg:items-start"
+      >
+        <h1 class="text-5xl text-bold text-balance">
+          All your <span class="font-bold">finances</span> in <span
+            class="font-bold">one</span
+          > place
+        </h1>
+        <p class="text-balance opacity-80">
+          Gain a complete view of your portfolio to make smarter decisions and
+          track your journey to success
+        </p>
+        <ActionButton />
+      </article>
+      <Image
+        src={PhoneHero}
+        width={600}
+        alt={"Finon app main two features, chart visualization and connection list."}
+      />
+    </section>
+  </Container>
+
+  <section id="features" class="py-32">
+    <h1 class="text-4xl font-extrabold text-center">
+      What makes Finon special?
+    </h1>
+    <Container class="flex flex-col lg:flex-row">
+      <Image id="selected-image" src={ChartImg} width={700} alt={"test"} />
+      <div class="flex flex-col gap-4 justify-center">
+        <Card
+          title="Portfolio Intelligence, Perfected."
+          text="Take command of your investments with a suite of analytical tools designed to monitor performance, reveal market trends, and unlock strategic insights. Finon empowers you to move from data to decision with speed and confidence."
+          className="scale-105 bg-black/5 "
+          imageSrc={ChartImg.src}
+        />
+        <Card
+          title="Connect Everything. See Everything."
+          text="Link your banks, exchanges, and brokerage accounts in moments. Finon integrates automatically to consolidate your investments into one powerful view—effortless connection, ultimate clarity."
+          imageSrc={ConnectImg.src}
+        />
+        <Card
+          title="Your Security is Our Priority"
+          text="Connect your accounts with confidence through official, password-free integrations. Finon utilizes read-only access and state-of-the-art encryption to ensure your assets are viewed but never touched—absolute security, complete control."
+        />
+      </div>
+    </Container>
+  </section>
+
+  <FAQ />
+  <CallToAction />
+  <Footer />
+</Layout>
+
+<script>
+  const cards = document.querySelectorAll("#card");
+  const image = document.getElementById("selected-image");
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      // First, remove the 'active-card' class from all cards
+      cards.forEach((c) => {
+        c.classList.remove("scale-105");
+        c.classList.remove("bg-black/5");
+      });
+
+      // Then, add the 'active-card' class to the one that was just clicked
+      card.classList.add("scale-105");
+      card.classList.add("bg-black/5");
+
+      const newImageSrc = card.getAttribute("data-image-src");
+
+      if (image && newImageSrc) {
+        // Set the 'src' of the standard <img> tag
+        image.src = newImageSrc;
+      }
+    });
+  });
+</script>

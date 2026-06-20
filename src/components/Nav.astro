@@ -1,0 +1,55 @@
+---
+import Logo from "../assets/finon-logo-word.svg";
+import ActionButton from "./ActionButton.astro";
+import Container from "./Container.astro";
+---
+
+<header class="bg-white dark:bg-black w-full fixed top-0 left-0 z-30">
+  <Container>
+    <div class="navbar">
+      <div class="navbar-start">
+        <a href="/">
+          <Logo width={150} />
+        </a>
+      </div>
+
+      <div
+        class="border-black/10 border-solid border-2 bg-black/5 px-12 w-min-300 rounded-4xl navbar-center hidden lg:flex shadow-sm"
+      >
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/#">Home</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="navbar-end">
+        <div class="dropdown dropdown-end">
+          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h8m-8 6h16"></path>
+            </svg>
+          </div>
+          <ul
+            tabindex="0"
+            class="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-4 w-52 p-2 shadow"
+          >
+            <li><a href="/#">Home</a></li>
+            <li><a href="/#features">Features</a></li>
+            <li><a href="/#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <ActionButton class="!hidden lg:!flex" />
+      </div>
+    </div>
+  </Container>
+</header>
