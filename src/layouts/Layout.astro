@@ -1,4 +1,5 @@
 ---
+import Posthog from "../components/Posthog.astro";
 import "../styles/global.css";
 const { title, description } = Astro.props;
 ---
@@ -37,6 +38,10 @@ const { title, description } = Astro.props;
 
     <!-- iOS App Meta Tags -->
     <meta name="apple-itunes-app" content="app-id=6751505655" />
+
+    <!-- Analytics -->
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="kRGzvaQ72K/9vtIvgFTYSQ" async></script>
+    <Posthog />
   </head>
   <body class="bg-white dark:bg-black">
     <slot />
