@@ -1,48 +1,23 @@
-# Astro Starter Kit: Basics
+# Finon website
 
-```sh
-bun create astro@latest -- --template basics
-```
+Marketing site for Finon (finon.app): Astro 5, Tailwind 4, TypeScript. Static output in `dist/`.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Commands
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Run from this folder, with bun (not npm):
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+- `bun install`
+- `bun run dev` starts the dev server
+- `bun run build` builds to `dist/`
+- `bun run preview` serves the build
 
-## 🚀 Project Structure
+## Where things live
 
-Inside of your Astro project, you'll see the following folders and files:
+- `src/pages/` one file per URL: index, support, terms, privacy
+- `src/components/` the building blocks; each starts with a comment saying what it does
+- `src/scripts/` the four small browser scripts: coinPing, letterReveal, dockTile, fadeIn
+- `src/styles/global.css` the colour tokens (light and dark), the font and the fade-in helper
+- `src/data/connections.ts` the providers shown as coins
+- `src/assets/` images and the Onest font; `public/` favicons, manifest, robots and sitemap
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `bun install`             | Installs dependencies                            |
-| `bun dev`             | Starts local dev server at `localhost:4321`      |
-| `bun build`           | Build your production site to `./dist/`          |
-| `bun preview`         | Preview your build locally, before deploying     |
-| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `bun astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Project skills for Claude Code live in `../ai-skills/` (see the repo root CLAUDE.md).
