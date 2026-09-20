@@ -1,0 +1,98 @@
+---
+/**
+ * RevealHeading: an h2 whose letters rise and sharpen in from left to right
+ * as it scrolls up, and sink back out on the way down. scripts/letterReveal.ts
+ * writes --reveal (0 to 1) on the element; the CSS below turns it into
+ * per-letter opacity, blur and lift. One word can be swapped for the slot
+ * content: Features puts the app icon tile where "Finon" goes. Screen readers
+ * get the plain text. Reduced motion or no JS: a plain sharp heading.
+ */
+interface Props {
+  text: string;
+  /** The word to replace with the slot content, if any. */
+  slotWord?: string;
+  id?: string;
+  class?: string;
+}
+const { text, slotWord, id, class: className = "" } = Astro.props;
+
+// Every letter, and the slot, is a "unit" numbered left to right; the CSS
+// staggers them by that number (--i).
+type Letter = { char: string; index: number };
+type Word = { kind: "letters"; letters: Letter[] } | { kind: "slot"; index: number };
+
+let unitCount = 0;
+const words = text.split(" ").map((word): Word => {
+  if (word === slotWord) return { kind: "slot", index: unitCount++ };
+  const letters = [...word].map((char) => ({ char, index: unitCount++ }));
+  return { kind: "letters", letters };
+});
+---
+
+<h2 id={id} class:list={["reveal-heading", className]} data-reveal-heading style={`--units:${unitCount}`}>
+  <span class="sr-only">{text}</span>
+  <span aria-hidden="true">
+    {
+      words.map((word, i) => (
+        <>
+          {i > 0 && " "}
+          {word.kind === "slot" ? (
+            <span class="object-slot" data-reveal-slot>
+              <span class="l object-reveal" style={`--i:${word.index}`}><slot /></span>
+            </span>
+          ) : (
+            <span class="word">{word.letters.map((letter) => <span class="l" style={`--i:${letter.index}`}>{letter.char}</span>)}</span>
+          )}
+        </>
+      ))
+    }
+  </span>
+</h2>
+
+<style>
+  /* --reveal (0..1) comes from scripts/letterReveal.ts; the default of 1
+     covers no JS and reduced motion. Each unit fades in over a --window wide
+     slice of that range, starting --stagger later than the unit before it. */
+  .reveal-heading {
+    --reveal: 1;
+    --slot-size: 56px;
+    --window: 0.3;
+    --stagger: calc((1 - var(--window)) / (var(--units) - 1));
+  }
+  .word {
+    white-space: nowrap; /* keeps a word's letters on one line */
+  }
+  /* .l is one unit: a letter, or the object slot (kept short because it is
+     written once per letter). --k is the unit's own progress, 0..1. Features
+     sets it to 1 on the slot while the tile is docked, so the travelling tile
+     is never faded or blurred. */
+  .l {
+    --k: clamp(0, calc((var(--reveal) - var(--i) * var(--stagger)) / var(--window)), 1);
+    display: inline-block;
+    opacity: var(--k);
+    filter: blur(calc((1 - var(--k)) * 8px));
+    transform: translateY(calc((1 - var(--k)) * 0.6em));
+  }
+  /* The slot keeps its footprint whether the object is in it or docked away,
+     so the heading never reflows. */
+  .object-slot {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    vertical-align: middle;
+    width: var(--slot-size);
+    height: var(--slot-size);
+    margin: 0 0.1em;
+  }
+  /* The blur filter makes this a stacking context, so it needs its own
+     z-index to sit above the section below. */
+  .object-reveal {
+    position: relative;
+    z-index: 20;
+  }
+</style>
+
+<script>
+  import { initLetterReveal } from "../scripts/letterReveal";
+  initLetterReveal();
+</script>

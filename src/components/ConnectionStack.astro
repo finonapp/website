@@ -1,0 +1,25 @@
+---
+/**
+ * ConnectionStack: a tight overlapping row of six provider coins for the hero
+ * below lg, where the floating layer has no room. One coin at a time pings,
+ * see scripts/coinPing.ts.
+ */
+import { connectionById } from "../data/connections";
+import ConnectionIcon from "./ConnectionIcon.astro";
+
+interface Props {
+  class?: string;
+}
+const { class: className = "" } = Astro.props;
+
+const ids = ["trading-212", "coinbase", "lloyds", "monzo", "revolut", "santander"];
+---
+
+<div class:list={["flex items-center -space-x-3", className]} role="list" aria-label="Supported connections" data-ping-group>
+  {ids.map((id) => <ConnectionIcon connection={connectionById[id]} size="sm" class="ring-2 ring-page" />)}
+</div>
+
+<script>
+  import { initCoinPing } from "../scripts/coinPing";
+  initCoinPing();
+</script>

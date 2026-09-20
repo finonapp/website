@@ -1,0 +1,45 @@
+---
+/**
+ * Background: wraps the hero, features and FAQ. One soft brand halo behind the
+ * hero copy, a faint dot texture over the whole block, and the content on top.
+ */
+---
+
+<div class="halo relative isolate overflow-hidden">
+  <div class="texture pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="relative">
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Sized in viewport units and anchored to the top, so the halo stays a round
+     patch behind the headline on every screen instead of scaling with this
+     wrapper's height. Stops mix from the tokens, so it works in both schemes. */
+  .halo {
+    background:
+      radial-gradient(
+          ellipse min(1100px, 150vw) min(620px, 70svh) at 50% 36svh,
+          color-mix(in srgb, var(--color-brand) 26%, transparent) 0%,
+          color-mix(in srgb, var(--color-brand) 10%, transparent) 45%,
+          transparent 75%
+        )
+        no-repeat,
+      var(--color-page);
+  }
+
+  /* Ink dots faded along a diagonal. Mask colours are alpha only: black keeps,
+     transparent hides. */
+  .texture {
+    opacity: 0.32;
+    background-image: radial-gradient(circle, var(--color-ink) 0.75px, transparent 1.2px);
+    background-size: 3.5px 3.5px;
+    mask-image: linear-gradient(110deg, #000, transparent 46%, #000);
+  }
+  /* Ink dots read stronger on a dark page; ease them off. */
+  @media (prefers-color-scheme: dark) {
+    .texture {
+      opacity: 0.14;
+    }
+  }
+</style>

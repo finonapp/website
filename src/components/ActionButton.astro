@@ -1,14 +1,9 @@
 ---
-const { class: className } = Astro.props;
-
+/** ActionButton: the App Store badge, linking to Finon on the UK App Store. */
 import { Image } from "astro:assets";
-import AppleBadge from "../assets/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg";
+import AppleBadge from "../assets/app-store-badge.svg";
 ---
 
-<a
-  href="https://apps.apple.com/gb/app/finon/id6751505655"
-  target="_blank"
-  class={`inline-flex justify-center ${className}`}
->
+<a href="https://apps.apple.com/gb/app/finon/id6751505655" target="_blank" rel="noopener" class="inline-flex justify-center">
   <Image src={AppleBadge} width={150} alt="Download on the App Store" />
 </a>

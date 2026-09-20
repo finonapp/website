@@ -1,14 +1,28 @@
 ---
+/**
+ * Layout: the document shell. Head tags (icons, SEO, social cards, App Store
+ * banner, analytics) and the body colours, which come from the tokens in
+ * styles/global.css and flip with the system colour scheme.
+ */
 import Posthog from "../components/Posthog.astro";
 import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- Browser chrome colour: keep in sync with --color-page in global.css. -->
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1524" media="(prefers-color-scheme: dark)" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- Favicon and App Icons -->
@@ -43,7 +57,7 @@ const { title, description } = Astro.props;
     <script src="https://analytics.ahrefs.com/analytics.js" data-key="kRGzvaQ72K/9vtIvgFTYSQ" async></script>
     <Posthog />
   </head>
-  <body class="bg-white dark:bg-black">
+  <body class="bg-page text-ink">
     <slot />
   </body>
 </html>

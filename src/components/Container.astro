@@ -1,10 +1,15 @@
 ---
-const { style, class: className } = Astro.props;
+/**
+ * Container: the centred content column, 80rem max, 24px side padding (none
+ * from xl). `container` gives it width: 100%, which matters where it is a
+ * flex item (hero, FAQ): without it those would shrink to their content.
+ */
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
 ---
 
-<div
-  class={`container mx-auto p-6  max-w-7xl xl:px-0 ${className}`}
-  style={style}
->
+<div class:list={["container mx-auto max-w-7xl p-6 xl:px-0", className]}>
   <slot />
 </div>

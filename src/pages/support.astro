@@ -28,7 +28,7 @@ import Layout from "../layouts/Layout.astro";
       <h2 class="text-2xl font-bold">Contact Information</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <article
-          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border-[#DCDCDC] border-solid border-2 bg-black/5"
+          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
         >
           <Mail class="size-12" />
           <h3 class="font-bold mb-4">Email Support</h3>
@@ -40,14 +40,14 @@ import Layout from "../layouts/Layout.astro";
           >
         </article>
         <article
-          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border-[#DCDCDC] border-solid border-2 bg-black/5"
+          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
         >
-          <DiscordIcon class="size-12 dark:fill-white" />
+          <DiscordIcon class="size-12 fill-ink" />
           <h3 class="font-bold mb-4">Discord Support</h3>
           <p class="text-sm">Join our discord and drop us a question</p>
           <a
             href="https://discord.gg/6Nye5rBtGf"
-            class="flex gap-2 justify-center items-center btn"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
             target="_blank">Join our server</a
           >
         </article>

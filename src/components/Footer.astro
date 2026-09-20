@@ -1,16 +1,17 @@
 ---
+/** Footer: fixed dark block with the copyright line and the legal links. */
 import Container from "./Container.astro";
 
 const year = new Date().getFullYear();
 ---
 
-<footer class="bg-[#272528] dark:bg-black text-white">
+<footer class="bg-night text-white">
   <Container class="flex justify-between py-8">
     <p>Copyright &copy; {year}</p>
-    <nav class="flex justify-center gap-4">
-      <a class="underline cursor-pointer" href="/terms">Terms of Use</a>
-      <a class="underline cursor-pointer" href="/privacy">Privacy Policy</a>
-      <a class="underline cursor-pointer" href="/support">Support</a>
+    <nav class="flex justify-center gap-4" aria-label="Legal">
+      <a class="underline" href="/terms">Terms of Use</a>
+      <a class="underline" href="/privacy">Privacy Policy</a>
+      <a class="underline" href="/support">Support</a>
     </nav>
   </Container>
 </footer>

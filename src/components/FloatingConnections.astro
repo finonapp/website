@@ -1,0 +1,97 @@
+---
+/**
+ * FloatingConnections: ten provider coins floating around the hero copy, lg
+ * and up (below lg the hero shows a ConnectionStack instead). Absolutely
+ * positioned inside the hero section. "back" coins are a little smaller,
+ * dimmer and softer so the headline stays the focal point. One coin at a
+ * time pings, see scripts/coinPing.ts.
+ */
+import { connectionById } from "../data/connections";
+import ConnectionIcon from "./ConnectionIcon.astro";
+
+type Coin = {
+  id: string;
+  /** Where the coin sits, as CSS offsets from the hero's edges. */
+  place: string;
+  size: "sm" | "md" | "lg" | "xl";
+  depth: "front" | "back";
+  /** Float animation in seconds. Different per coin so no two move in sync. */
+  duration: number;
+  delay: number;
+};
+
+const coins: Coin[] = [
+  // Left side, top to bottom
+  { id: "trading-212", place: "top:20%;left:9%", size: "lg", depth: "front", duration: 7.5, delay: 0 },
+  { id: "monzo", place: "top:50%;left:4%", size: "md", depth: "back", duration: 8.5, delay: -2.3 },
+  { id: "lloyds", place: "bottom:14%;left:13%", size: "xl", depth: "front", duration: 9, delay: -4.1 },
+  { id: "wise", place: "top:32%;left:24%", size: "sm", depth: "back", duration: 6.5, delay: -1.2 },
+  { id: "kraken", place: "bottom:26%;left:27%", size: "md", depth: "back", duration: 7.8, delay: -5.6 },
+  // Right side, top to bottom
+  { id: "coinbase", place: "top:18%;right:11%", size: "xl", depth: "front", duration: 8.2, delay: -3.4 },
+  { id: "revolut", place: "top:48%;right:4%", size: "md", depth: "back", duration: 7, delay: -0.8 },
+  { id: "santander", place: "bottom:12%;right:12%", size: "md", depth: "back", duration: 8.8, delay: -6.2 },
+  { id: "chase", place: "top:34%;right:25%", size: "sm", depth: "back", duration: 6.8, delay: -2.9 },
+  { id: "bitget", place: "bottom:28%;right:26%", size: "md", depth: "back", duration: 7.4, delay: -4.7 },
+];
+---
+
+<div class="pointer-events-none absolute inset-0 hidden overflow-hidden lg:block" aria-hidden="true" data-ping-group>
+  {
+    coins.map((coin) => (
+      <div
+        class:list={["floating-coin absolute", coin.depth === "back" ? "coin-back" : "coin-front"]}
+        style={`${coin.place};--float-duration:${coin.duration}s;--float-delay:${coin.delay}s`}
+      >
+        <ConnectionIcon connection={connectionById[coin.id]} size={coin.size} class="pointer-events-auto" />
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  import { initCoinPing } from "../scripts/coinPing";
+  initCoinPing();
+</script>
+
+<style>
+  .floating-coin {
+    animation: coin-float var(--float-duration) ease-in-out var(--float-delay) infinite;
+    will-change: transform;
+  }
+
+  /* Back layer: recessed so the headline wins. */
+  .coin-back {
+    scale: 0.92;
+    opacity: 0.78;
+    filter: blur(0.4px) saturate(0.95);
+  }
+
+  /* These replace the coin's own shadow utility, which bakes in the light
+     values; reading the tokens here means the shadows flip in dark mode.
+     Back coins get the small shadow, front coins the large one. */
+  .coin-back :global(.connection-icon) {
+    box-shadow: var(--shadow-coin);
+  }
+  .coin-front :global(.connection-icon) {
+    box-shadow: var(--shadow-coin-lg);
+  }
+
+  @keyframes coin-float {
+    0%,
+    100% {
+      translate: 0 0;
+      rotate: 0deg;
+    }
+    50% {
+      translate: 0 -14px;
+      rotate: 2deg;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .floating-coin {
+      animation: none;
+    }
+  }
+</style>

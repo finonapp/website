@@ -1,0 +1,132 @@
+---
+/**
+ * Features: "What makes [Finon] special?" with the app screenshot in the
+ * middle and four text blocks around it. On lg it is a 3-column grid, two
+ * blocks each side with a brand rule facing the phone; below lg the
+ * screenshot comes first, then the blocks (1 column, 2 from md).
+ *
+ * The word "Finon" in the heading is the app icon tile. On lg, when the
+ * screenshot rises past the middle of the viewport, the tile glides onto the
+ * screenshot's top edge, and back again on the way down (scripts/dockTile.ts).
+ * Reduced motion or no JS: heading sharp, tile in the heading.
+ *
+ * To swap the screenshot, replace src/assets/images/home_screenshot.png or
+ * change the one import below.
+ */
+import { Image } from "astro:assets";
+import RevealHeading from "./RevealHeading.astro";
+import homeScreenshot from "../assets/images/home_screenshot.png";
+
+// On lg the blocks face the phone: the left column is right-aligned with a
+// brand rule on its right, the right column mirrors it. Plain string literals
+// so Tailwind's scanner sees every class.
+const leftOfPhone = "lg:col-start-1 lg:items-end lg:text-right lg:border-r-3 lg:pr-6";
+const rightOfPhone = "lg:col-start-3 lg:items-start lg:text-left lg:border-l-3 lg:pl-6";
+
+const features = [
+  {
+    title: "Portfolio intelligence, perfected",
+    text: "Monitor performance, spot trends and act on insight. Finon takes you from data to decision with speed and confidence.",
+    column: leftOfPhone,
+    row: "lg:row-start-1",
+  },
+  {
+    title: "Connect everything, see everything",
+    text: "Link banks, exchanges and brokers in moments. Finon pulls them into one clear view, automatically.",
+    column: leftOfPhone,
+    row: "lg:row-start-2",
+  },
+  {
+    title: "Your security comes first",
+    text: "Official, password-free integrations with read-only access and strong encryption. Your assets are viewed, never touched.",
+    column: rightOfPhone,
+    row: "lg:row-start-1",
+  },
+  {
+    title: "Allocation at a glance",
+    text: "See how your money splits across savings, stocks, cash and crypto, and spot when one slice grows too big.",
+    column: rightOfPhone,
+    row: "lg:row-start-2",
+  },
+];
+---
+
+<section id="features" class="scroll-mt-32 py-8 sm:py-20 lg:py-28" aria-labelledby="features-heading" data-features>
+  <!-- Not Container: that drops its side padding at xl, this section keeps 32px. -->
+  <div class="mx-auto max-w-7xl px-6 sm:px-8">
+    <RevealHeading
+      id="features-heading"
+      text="What makes Finon special?"
+      slotWord="Finon"
+      class="mx-auto mb-12 max-w-2xl text-center text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-balance text-ink sm:text-4xl lg:mb-16 lg:text-[40px]"
+    >
+      {/* The app icon, reused from the PWA icon in public/. White tile on purpose, like the coins. */}
+      <span class="icon-tile pointer-events-none block overflow-hidden rounded-[22%] bg-white">
+        <img src="/web-app-manifest-512x512.png" width="72" height="72" alt="" decoding="async" draggable="false" class="block size-full" />
+      </span>
+    </RevealHeading>
+
+    <div class="grid gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+      <!-- The phone: first in the DOM so it leads below lg, middle column on lg. dockTile.ts targets it. -->
+      <div
+        class="relative aspect-3/4 md:col-span-2 md:aspect-4/3 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:min-h-[520px]"
+        data-icon-target
+      >
+        <Image
+          src={homeScreenshot}
+          width={960}
+          alt="Finon home screen showing total value with savings, stocks, cash and crypto"
+          class="absolute inset-0 size-full max-w-none object-contain object-top drop-shadow-phone"
+        />
+      </div>
+
+      <!-- Text blocks. --i staggers their fade-in by 90ms each (see .fade-in in global.css). -->
+      {
+        features.map((feature, i) => (
+          <article
+            class:list={["fade-in flex flex-col justify-center gap-2 border-brand/60 py-2 lg:my-6", feature.column, feature.row]}
+            style={`--i:${i + 1}`}
+          >
+            <h3 class="text-2xl font-semibold leading-tight tracking-[-0.02em] text-balance text-ink">{feature.title}</h3>
+            <p class="max-w-sm text-base leading-relaxed text-ink-muted">{feature.text}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The tile: 56px in the heading slot (RevealHeading's --slot-size), 72px once docked. */
+  .icon-tile {
+    width: var(--slot-size);
+    height: var(--slot-size);
+    box-shadow:
+      var(--shadow-coin-lg),
+      0 0 0 1px rgba(255, 255, 255, 0.35);
+    will-change: transform;
+    transition: transform 800ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Docked: scripts/dockTile.ts writes --dx / --dy (slot centre to the middle
+     of the phone's top edge) on the section and toggles .is-docked; the
+     transition above carries the tile there and back. */
+  [data-features].is-docked .icon-tile {
+    transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(calc(72 / 56));
+  }
+  /* While docked the slot must not fade or blur the travelling tile. */
+  [data-features].is-docked :global(.object-reveal) {
+    --k: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .icon-tile {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { initDockTile } from "../scripts/dockTile";
+  initDockTile();
+</script>

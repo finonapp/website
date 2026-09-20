@@ -1,55 +1,90 @@
 ---
+/**
+ * Nav: one floating pill (page colour, blurred) fixed at the top, above the
+ * Background halo. Logo left, three anchors in the middle (lg+), a brand
+ * "Get the app" button right. Below lg the anchors move into a
+ * details/summary menu; the script at the bottom only closes it.
+ */
+import { Menu } from "@lucide/astro";
 import Logo from "../assets/finon-logo-word.svg";
-import ActionButton from "./ActionButton.astro";
-import Container from "./Container.astro";
+
+const links = [
+  { href: "/#", label: "Home" },
+  { href: "/#features", label: "Features" },
+  { href: "/#faq", label: "FAQ" },
+];
+const appStore = "https://apps.apple.com/gb/app/finon/id6751505655";
 ---
 
-<header class="bg-white dark:bg-black w-full fixed top-0 left-0 z-30">
-  <Container>
-    <div class="navbar">
-      <div class="navbar-start">
-        <a href="/">
-          <Logo width={150} />
-        </a>
-      </div>
+<header class="fixed inset-x-0 top-0 z-30 px-4 pt-4 sm:px-6">
+  <nav
+    class="mx-auto flex h-14 max-w-5xl items-center justify-between gap-4 rounded-full border border-line bg-page/85 pr-2 pl-5 shadow-coin backdrop-blur-md"
+    aria-label="Main"
+  >
+    <a href="/" class="flex items-center" aria-label="Finon home">
+      <Logo width={108} aria-hidden="true" />
+    </a>
 
-      <div
-        class="border-black/10 border-solid border-2 bg-black/5 px-12 w-min-300 rounded-4xl navbar-center hidden lg:flex shadow-sm"
-      >
-        <ul class="menu menu-horizontal px-1">
-          <li><a href="/#">Home</a></li>
-          <li><a href="/#features">Features</a></li>
-          <li><a href="/#faq">FAQ</a></li>
-        </ul>
-      </div>
-      <div class="navbar-end">
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+    <ul class="hidden items-center gap-1 lg:flex">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.href}
+              class="rounded-full px-4 py-2 text-sm font-medium text-ink-muted transition-colors hover:bg-surface hover:text-ink"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h8m-8 6h16"></path>
-            </svg>
-          </div>
-          <ul
-            tabindex="0"
-            class="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-4 w-52 p-2 shadow"
-          >
-            <li><a href="/#">Home</a></li>
-            <li><a href="/#features">Features</a></li>
-            <li><a href="/#faq">FAQ</a></li>
-          </ul>
-        </div>
-        <ActionButton class="!hidden lg:!flex" />
-      </div>
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="flex items-center gap-1">
+      <a
+        href={appStore}
+        target="_blank"
+        rel="noopener"
+        class="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+      >
+        Get the app
+      </a>
+
+      <details class="relative lg:hidden">
+        <summary
+          class="grid size-10 cursor-pointer list-none place-items-center rounded-full text-ink hover:bg-surface [&::-webkit-details-marker]:hidden"
+          aria-label="Menu"
+        >
+          <Menu size={20} stroke-width={1.75} />
+        </summary>
+        <ul class="absolute right-0 mt-3 w-48 rounded-2xl border border-line bg-page p-2 shadow-coin-lg">
+          {
+            links.map((link) => (
+              <li>
+                <a href={link.href} class="block rounded-xl px-3 py-2 text-sm font-medium text-ink hover:bg-surface">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </details>
     </div>
-  </Container>
+  </nav>
 </header>
+
+<script>
+  // <details> has no auto-close. Close the menu on a link tap, a click outside, or Escape.
+  const menu = document.querySelector<HTMLDetailsElement>("header details");
+  if (menu) {
+    menu.addEventListener("click", (event) => {
+      if ((event.target as HTMLElement).closest("a")) menu.open = false;
+    });
+    document.addEventListener("click", (event) => {
+      if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") menu.open = false;
+    });
+  }
+</script>

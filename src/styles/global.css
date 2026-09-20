@@ -1,20 +1,82 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
+/* Onest, the site's only typeface. Variable weight, self-hosted from src/assets/fonts. */
 @font-face {
-	font-family: "Onest";
-	src: url("/fonts/Onest.woff2") format("woff2-variations");
-	font-weight: 100 900;
-	font-style: normal;
+  font-family: "Onest";
+  src: url("../assets/fonts/Onest.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
 }
 
-html,
-body {
-	font-family: "Onest", sans-serif;
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: auto;
-	box-sizing: border-box;
-	scroll-behavior: smooth;
+/* Finon 2026 tokens, mirrored from app/apps/mobile/styles/global.ts (`ui`).
+   Light values live here; the dark block below overrides the same variables
+   under prefers-color-scheme, so every utility flips with the system setting
+   and there is no toggle. `page` is the canvas. `night` never flips: it is
+   the fixed dark block behind the CTA and the footer. */
+@theme {
+  /* Tailwind's preflight puts --font-sans on <html>, so this is the body font. */
+  --font-sans: "Onest", sans-serif;
+
+  --color-page: #ffffff;
+  --color-night: #0b1524;
+  --color-ink: #0b1524;
+  --color-ink-muted: #5b6675;
+  --color-ink-faint: #939cab;
+  --color-surface: #f5f7fa;
+  --color-brand: #2563eb;
+  --color-brand-tint: #eaf0ff;
+  /* Hover fill of the brand buttons (Nav "Get the app", support "Join our server"). */
+  --color-brand-hover: #0b1524;
+  --color-line: rgba(11, 21, 36, 0.08);
+
+  --shadow-coin: 0 1px 2px rgba(11, 21, 36, 0.06), 0 12px 32px -12px rgba(11, 21, 36, 0.18);
+  --shadow-coin-lg: 0 2px 4px rgba(11, 21, 36, 0.06), 0 24px 48px -16px rgba(11, 21, 36, 0.22);
+  /* Soft shadow under the phone screenshot (Features). */
+  --drop-shadow-phone: 0 24px 48px rgba(11, 21, 36, 0.22);
+}
+
+/* Dark scheme: same tokens, night values. Brand lifts a step for contrast.
+   Coins and the app icon tile keep their white discs in both schemes. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-page: #0b1524;
+    --color-ink: #f2f5fa;
+    --color-ink-muted: #a3adbd;
+    --color-ink-faint: #6b7687;
+    --color-surface: #111d30;
+    --color-brand: #4f7df3;
+    --color-brand-tint: #16274a;
+    --color-brand-hover: #16274a;
+    --color-line: rgba(255, 255, 255, 0.08);
+    --shadow-coin: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+    --shadow-coin-lg: 0 2px 4px rgba(0, 0, 0, 0.35), 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* Fade, rise and sharpen on entry; scripts/fadeIn.ts adds .is-visible once.
+   Stagger siblings with --i (90ms each). The final filter is none, not
+   blur(0), so the element stops being a stacking context. */
+.fade-in {
+  opacity: 0;
+  translate: 0 28px;
+  filter: blur(8px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    translate 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+.fade-in.is-visible {
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    opacity: 1;
+    translate: none;
+    filter: none;
+    transition: none;
+  }
 }
