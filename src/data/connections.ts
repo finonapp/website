@@ -3,7 +3,6 @@ import type { ImageMetadata } from "astro";
 import bitget from "../assets/images/connect/bitget.png";
 import chase from "../assets/images/connect/chase-bank.png";
 import coinbase from "../assets/images/connect/coinbase.png";
-import kraken from "../assets/images/connect/kraken.png";
 import lloyds from "../assets/images/connect/lloyds-personal.png";
 import monzo from "../assets/images/connect/monzo.png";
 import revolut from "../assets/images/connect/revolut.png";
@@ -26,7 +25,6 @@ const connections: Connection[] = [
   { id: "santander", name: "Santander", image: santander },
   { id: "chase", name: "Chase", image: chase },
   { id: "wise", name: "Wise", image: wise },
-  { id: "kraken", name: "Kraken", image: kraken },
   { id: "bitget", name: "Bitget", image: bitget },
 ];
 
