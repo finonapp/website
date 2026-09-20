@@ -1,150 +1,75 @@
 ---
-/** Supported accounts and methods, reviewed against the app's src/connect/list.ts and connection flows. */
-import ActionButton from "../components/ActionButton.astro";
+/** An API-backed directory, rendered at build time for SEO and refreshed in the browser. */
 import CallToAction from "../components/CallToAction.astro";
+import ConnectionCard from "../components/ConnectionCard.astro";
 import Container from "../components/Container.astro";
 import Footer from "../components/Footer.astro";
 import Nav from "../components/Nav.astro";
 import Layout from "../layouts/Layout.astro";
+import { fetchConnections, type LiveConnection } from "../lib/connections";
 
-const banks = ["Barclays", "Chase", "Lloyds Bank", "Monzo", "Revolut", "Santander", "Wise"];
-const investmentConnections = [
-  { name: "Trading 212", assets: "Stocks and cash", method: "API key with read-only permissions" },
-  { name: "Coinbase", assets: "Crypto", method: "Authorise your Coinbase account" },
-  { name: "Bitget", assets: "Crypto", method: "API key with read-only permissions" },
-];
+let connections: LiveConnection[] = [];
+let checkedAt = "";
+try {
+  connections = await fetchConnections();
+  checkedAt = new Date().toISOString();
+} catch (error) {
+  // The directory can still load in the browser if the API is unavailable during a build.
+  console.warn("Could not prerender connections:", error instanceof Error ? error.message : error);
+}
 ---
 
 <Layout
   title="Supported Banks & Investment Connections – Finon"
-  description="Explore the banks, brokers and crypto exchanges you can track with Finon. Connect accounts, import Freetrade and Moneybox statements, or add commodities."
+  description="See which banks, investment platforms and crypto exchanges are available in Finon. Check the latest connection availability and track your money in one place."
 >
   <Nav />
-  <main>
-    <section class="pt-32 pb-12 sm:pt-40 sm:pb-16" aria-labelledby="connections-heading">
-      <Container>
-        <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-          <p class="text-sm font-semibold uppercase tracking-widest text-brand">Supported connections</p>
-          <h1 id="connections-heading" class="text-4xl font-semibold leading-tight tracking-[-0.03em] text-balance sm:text-5xl">
-            Your banks, investments and crypto. Together.
-          </h1>
-          <p class="max-w-2xl text-lg leading-relaxed text-ink-muted">
-            Bring your accounts into Finon to track investments and bank balances in one place.
-            Connect supported providers, import statements or add commodities manually.
+  <main class="pt-32 sm:pt-40">
+    <Container class="pb-16 sm:pb-24">
+      <div class="mx-auto max-w-5xl">
+        <header class="mx-auto mb-10 max-w-2xl text-center sm:mb-14">
+          <h1 class="text-4xl font-semibold leading-tight tracking-[-0.03em] text-balance sm:text-5xl">Your connections, in one place</h1>
+          <p class="mt-5 text-lg leading-relaxed text-ink-muted">
+            Find your banks, investment platforms and crypto exchanges.
+            See what’s available to connect with Finon.
           </p>
-          <ActionButton />
-          <p class="text-sm text-ink-muted">For UK users. Free to download, with premium features available.</p>
-        </div>
-      </Container>
-    </section>
+        </header>
 
-    <section class="py-10 sm:py-16" aria-labelledby="banks-heading">
-      <Container>
-        <div class="grid gap-8 lg:grid-cols-[1fr_1.5fr] lg:gap-16">
-          <div class="flex flex-col gap-4">
-            <h2 id="banks-heading" class="text-3xl font-semibold tracking-tight">Connect your bank accounts</h2>
-            <p class="leading-relaxed text-ink-muted">
-              Authorise access through your bank using Open Banking. Finon brings the balances
-              from your supported accounts into your dashboard, alongside your investments.
-            </p>
-            <p class="text-sm leading-relaxed text-ink-muted">
-              Account coverage varies by bank. The authorisation step shows which accounts you
-              can share. You may need to renew access to keep a connection updated.
-            </p>
+        <section aria-labelledby="directory-heading" data-connections-directory data-checked-at={checkedAt}>
+          <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <h2 id="directory-heading" class="text-lg font-semibold">Connections</h2>
+            <time data-connections-checked datetime={checkedAt} hidden={!checkedAt} class="text-sm text-ink-muted">
+              {checkedAt && `Last checked ${new Date(checkedAt).toLocaleString("en-GB", { timeZone: "UTC", dateStyle: "medium", timeStyle: "short" })} UTC`}
+            </time>
           </div>
-          <ul class="grid gap-3 sm:grid-cols-2" aria-label="Supported banks">
-            {banks.map((bank) => (
-              <li class="flex items-center rounded-2xl border border-line bg-surface px-6 py-5 font-medium">{bank}</li>
-            ))}
+          <ul data-connections-list class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {connections.map((connection) => <ConnectionCard connection={connection} />)}
           </ul>
-        </div>
-      </Container>
-    </section>
-
-    <section class="py-10 sm:py-16" aria-labelledby="investments-heading">
-      <Container>
-        <div class="mb-8 flex max-w-2xl flex-col gap-4">
-          <h2 id="investments-heading" class="text-3xl font-semibold tracking-tight">Track your stocks and crypto</h2>
-          <p class="leading-relaxed text-ink-muted">
-            Add these accounts to see your holdings alongside your bank balances. Follow the
-            connection steps in Finon and grant only the read-only permissions requested.
+          <p data-connections-empty hidden={connections.length > 0} class="rounded-2xl border border-line bg-surface p-8 text-center text-ink-muted">
+            {checkedAt ? "No connections are listed right now. Please check again later." : "Loading connections…"}
           </p>
-        </div>
-        <div class="grid gap-4 md:grid-cols-3">
-          {investmentConnections.map(({ name, assets, method }) => (
-            <article class="flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6">
-              <h3 class="text-xl font-semibold">{name}</h3>
-              <dl class="flex flex-col gap-4 text-sm">
-                <div>
-                  <dt class="font-medium">What you can track</dt>
-                  <dd class="mt-1 text-ink-muted">{assets}</dd>
-                </div>
-                <div>
-                  <dt class="font-medium">How to connect</dt>
-                  <dd class="mt-1 text-ink-muted">{method}</dd>
-                </div>
-              </dl>
-            </article>
-          ))}
-        </div>
-        <p class="mt-6 max-w-3xl text-sm leading-relaxed text-ink-muted">
-          Balances and holdings reflect the latest available sync. If a connection needs attention,
-          follow the reconnect instructions in the app. Finon cannot place trades or transfer funds.
-        </p>
-      </Container>
-    </section>
+          <template data-connection-template><ConnectionCard /></template>
+          <noscript>
+            <p class="mt-4 text-sm text-ink-muted">
+              {!checkedAt && "The connection list could not be loaded."}
+              Enable JavaScript for automatic updates, or check availability in the Finon app.
+            </p>
+            <style is:inline>[data-connections-empty] { display: none; }</style>
+          </noscript>
+        </section>
 
-    <section id="statement-imports" class="scroll-mt-24 py-10 sm:py-16" aria-labelledby="imports-heading">
-      <Container>
-        <div class="mb-8 flex max-w-2xl flex-col gap-4">
-          <h2 id="imports-heading" class="text-3xl font-semibold tracking-tight">Bring in your statements</h2>
-          <p class="leading-relaxed text-ink-muted">
-            Track holdings from Freetrade and Moneybox by importing files. These accounts update
-            when you upload new statements, so you choose when to bring them up to date.
-          </p>
+        <div id="statement-imports" class="mt-10 scroll-mt-24 border-t border-line pt-6 text-sm leading-relaxed text-ink-muted">
+          <p>Connection methods vary by provider, including account linking and statement imports. Follow the steps in the app to get started.</p>
+          <p class="mt-2">Can’t find your provider? <a href="/support" class="text-brand underline underline-offset-4">Let us know</a>.</p>
         </div>
-        <div class="grid gap-4 md:grid-cols-2">
-          <article class="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-6">
-            <h3 class="text-xl font-semibold">Freetrade</h3>
-            <p class="leading-relaxed text-ink-muted">
-              Download your monthly PDF statement and export your activity as a CSV from Freetrade.
-              Follow the in-app instructions to import your files into Finon.
-            </p>
-          </article>
-          <article class="flex flex-col gap-3 rounded-2xl border border-line bg-surface p-6">
-            <h3 class="text-xl font-semibold">Moneybox</h3>
-            <p class="leading-relaxed text-ink-muted">
-              Request a PDF statement from Moneybox, then upload it using the import steps in Finon.
-              The app guides you through choosing and downloading the statement.
-            </p>
-          </article>
-        </div>
-      </Container>
-    </section>
-
-    <section class="pt-10 pb-20 sm:pt-16 sm:pb-28" aria-labelledby="manual-heading">
-      <Container>
-        <div class="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          <div class="flex flex-col gap-4">
-            <h2 id="manual-heading" class="text-3xl font-semibold tracking-tight">Add commodities manually</h2>
-            <p class="leading-relaxed text-ink-muted">
-              Add holdings such as gold and silver to include them in your tracked portfolio.
-              Manual entry currently supports commodities; it does not connect an unsupported bank or broker.
-            </p>
-          </div>
-          <div class="flex flex-col gap-4">
-            <h2 class="text-3xl font-semibold tracking-tight">Looking for another provider?</h2>
-            <p class="leading-relaxed text-ink-muted">
-              Check the account list in the app for current availability. If your provider is missing,
-              <a href="/support" class="text-brand underline underline-offset-4">contact Finon support</a>
-              and tell us what you would like to track.
-            </p>
-            <a href="/#features" class="font-medium text-brand underline underline-offset-4">Explore Finon’s investment tracking features</a>
-          </div>
-        </div>
-      </Container>
-    </section>
+      </div>
+    </Container>
     <CallToAction />
-  </main>
+</main>
   <Footer />
 </Layout>
+
+<script>
+  import { initConnectionsDirectory } from "../scripts/connectionsDirectory";
+  initConnectionsDirectory();
+</script>

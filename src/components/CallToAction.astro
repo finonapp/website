@@ -1,5 +1,5 @@
 ---
-/** CallToAction: fixed dark block above the footer with the App Store badge. Also used on /support. */
+/** CallToAction: shared dark section above the footer with the App Store badge. */
 import ActionButton from "./ActionButton.astro";
 import Container from "./Container.astro";
 ---
@@ -8,8 +8,11 @@ import Container from "./Container.astro";
   <Container class="flex flex-col items-center gap-12 text-center">
     <div class="flex flex-col gap-4">
       <h2 class="text-4xl font-bold">Ready for a simpler way to manage your finances?</h2>
-      <p class="font-light">Track your investments, bank balances and crypto together with Finon.</p>
+      <p class="font-light">Track your investments, bank balances and crypto in one place.</p>
     </div>
-    <ActionButton />
+    <div class="flex flex-col items-center gap-3">
+      <ActionButton />
+      <p class="text-sm text-white/70">Free on iOS. UK only.</p>
+    </div>
   </Container>
 </section>

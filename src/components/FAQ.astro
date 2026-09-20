@@ -15,13 +15,13 @@ const questions = [
   },
   {
     question: "Which accounts can I connect?",
-    answer: "Finon supports UK banks including Monzo, Barclays, Lloyds, Santander and Chase, along with Revolut and Wise. You can also connect Trading 212, Coinbase and Bitget. The connection method and account coverage depend on the provider.",
-    link: { href: "/connections", text: "Explore supported accounts and connection methods" },
+    answer: "You can track accounts from supported banks, investment platforms and crypto exchanges. Check the connections page for the current list and availability. The connection method and account coverage depend on the provider.",
+    link: { href: "/connections", text: "Check available connections" },
   },
   {
     question: "Can I track investments without an automatic connection?",
     answer: "You can import statements from Freetrade and Moneybox to bring those holdings into your portfolio. Follow the import instructions in the app and upload new statements to update them. Manual entry is also available for commodities such as gold and silver.",
-    link: { href: "/connections#statement-imports", text: "Learn about statement imports" },
+    link: { href: "/connections", text: "Check connection availability" },
   },
   {
     question: "Can Finon move my money or make trades?",
@@ -29,7 +29,7 @@ const questions = [
   },
   {
     question: "Is Finon free?",
-    answer: "Finon is free to download. Some features require Finon Premium, available through a monthly or annual subscription, or a lifetime purchase. The app shows the current prices and included features before you choose a plan.",
+    answer: "Yes. Finon’s free plan includes up to 2 connections. To add more than 2, upgrade to Finon Pro. You can see the current pricing and plan details in the app before upgrading.",
   },
   {
     question: "How does Finon compare with other personal financial apps?",
@@ -60,7 +60,7 @@ const questions = [
           <h3 class="font-semibold">{question}</h3>
           <ChevronDown class="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180" stroke-width={2.4} aria-hidden="true" />
         </summary>
-        <p class="max-w-3xl px-4 pb-4 text-sm leading-relaxed text-ink-muted">
+        <p class="px-4 pb-4 text-sm leading-relaxed text-ink-muted">
           {answer}
           {link && <> <a href={link.href} class="underline underline-offset-4">{link.text}</a>.</>}
         </p>

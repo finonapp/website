@@ -1,0 +1,20 @@
+---
+/** Shared markup for the initial HTML and the live list's native template. */
+import type { LiveConnection } from "../lib/connections";
+interface Props { connection?: LiveConnection }
+const { connection } = Astro.props;
+---
+
+<li class="flex items-center gap-4 rounded-2xl border border-line bg-surface p-5">
+  <span class="relative grid size-12 shrink-0 place-items-center overflow-hidden rounded-xl bg-white text-lg font-semibold text-slate-600" aria-hidden="true">
+    <span data-connection-initial>{connection?.name.charAt(0)}</span>
+    <img data-connection-icon src={connection?.icon ?? undefined} hidden={!connection?.icon} alt="" width="48" height="48" loading="lazy" class="absolute inset-0 size-full object-contain" />
+  </span>
+  <div class="min-w-0 flex-1">
+    <h3 data-connection-name class="font-semibold leading-snug break-words">{connection?.name}</h3>
+    <p data-connection-assets class="mt-1 text-xs leading-relaxed text-ink-muted">{connection?.assets}</p>
+    <p data-connection-status data-available={String(connection?.available ?? false)} class="mt-2 text-xs font-medium text-ink-muted data-[available=true]:text-brand">
+      {connection?.available ? "Available" : "Unavailable"}
+    </p>
+  </div>
+</li>
