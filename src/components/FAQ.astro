@@ -7,6 +7,39 @@
 import { ChevronDown } from "@lucide/astro";
 import Container from "./Container.astro";
 import RevealHeading from "./RevealHeading.astro";
+
+const questions = [
+  {
+    question: "What can I track with Finon?",
+    answer: "Finon brings your bank balances, stocks and crypto into one dashboard. Follow the value of your tracked holdings over time, see your asset allocation and add commodities such as gold manually.",
+  },
+  {
+    question: "Which accounts can I connect?",
+    answer: "Finon supports UK banks including Monzo, Barclays, Lloyds, Santander and Chase, along with Revolut and Wise. You can also connect Trading 212, Coinbase and Bitget. The connection method and account coverage depend on the provider.",
+    link: { href: "/connections", text: "Explore supported accounts and connection methods" },
+  },
+  {
+    question: "Can I track investments without an automatic connection?",
+    answer: "You can import statements from Freetrade and Moneybox to bring those holdings into your portfolio. Follow the import instructions in the app and upload new statements to update them. Manual entry is also available for commodities such as gold and silver.",
+    link: { href: "/connections#statement-imports", text: "Learn about statement imports" },
+  },
+  {
+    question: "Can Finon move my money or make trades?",
+    answer: "No. Finon is a read-only financial app: it displays account information and cannot transfer funds or place trades. Bank connections use Open Banking authorisation, while some investment and crypto connections use API keys with read-only permissions.",
+  },
+  {
+    question: "Is Finon free?",
+    answer: "Finon is free to download. Some features require Finon Premium, available through a monthly or annual subscription, or a lifetime purchase. The app shows the current prices and included features before you choose a plan.",
+  },
+  {
+    question: "How does Finon compare with other personal financial apps?",
+    answer: "Personal financial apps cover different needs, from budgeting to investment tracking. Finon focuses on bringing your balances and investments into one view, with portfolio history and an asset breakdown. When choosing an app, check its supported accounts, connection methods, pricing and the features you need.",
+  },
+  {
+    question: "Where is Finon available?",
+    answer: "Finon is available on iPhone and iPad for users in the UK. You can download it from the UK App Store and follow the in-app steps to add your first account.",
+  },
+];
 ---
 
 <section id="faq" class="flex flex-col gap-4 py-32" aria-labelledby="faq-heading">
@@ -20,33 +53,18 @@ import RevealHeading from "./RevealHeading.astro";
     <a class="underline" href="/support">Contact us</a>.
   </p>
 
-  <Container>
-    <details name="faq" class="group rounded-2xl border border-line bg-surface text-ink" open>
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-4 [&::-webkit-details-marker]:hidden">
-        <h3 class="font-semibold">Which account can I connect?</h3>
-        <ChevronDown class="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180" stroke-width={2.4} aria-hidden="true" />
-      </summary>
-      <p class="px-4 pb-4 text-sm text-ink-muted">
-        We're starting with the UK's most popular banks and exchanges. We are expanding this list every month based on
-        waitlist user requests. See
-        <a
-          href="https://docs.google.com/spreadsheets/d/1pqarJN8L3lZzMCyd4eQht-kttXtz7582prEfZoM1GZM/edit?usp=sharing"
-          class="underline"
-          target="_blank"
-          rel="noopener">the current list of connections</a
-        >.
-      </p>
-    </details>
-
-    <details name="faq" class="group rounded-2xl border border-line bg-surface text-ink">
-      <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-4 [&::-webkit-details-marker]:hidden">
-        <h3 class="font-semibold">What account types do you support?</h3>
-        <ChevronDown class="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180" stroke-width={2.4} aria-hidden="true" />
-      </summary>
-      <p class="px-4 pb-4 text-sm text-ink-muted">
-        We currently support bank accounts, crypto exchanges, and stock platforms. We are actively working to expand into
-        other asset classes like pensions, commodities, and real estate.
-      </p>
-    </details>
+  <Container class="flex flex-col gap-3">
+    {questions.map(({ question, answer, link }, index) => (
+      <details name="faq" class="group rounded-2xl border border-line bg-surface text-ink" open={index === 0}>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-4 p-4 [&::-webkit-details-marker]:hidden">
+          <h3 class="font-semibold">{question}</h3>
+          <ChevronDown class="size-5 shrink-0 transition-transform duration-200 group-open:rotate-180" stroke-width={2.4} aria-hidden="true" />
+        </summary>
+        <p class="max-w-3xl px-4 pb-4 text-sm leading-relaxed text-ink-muted">
+          {answer}
+          {link && <> <a href={link.href} class="underline underline-offset-4">{link.text}</a>.</>}
+        </p>
+      </details>
+    ))}
   </Container>
 </section>
