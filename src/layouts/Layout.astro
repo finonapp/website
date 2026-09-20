@@ -12,6 +12,10 @@ interface Props {
   description: string;
 }
 const { title, description } = Astro.props;
+// Match the extensionless URLs in our links and sitemap, without query parameters.
+const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
+const canonicalURL = new URL(pathname, Astro.site);
+const socialImageURL = new URL("/og-image.webp", Astro.site);
 ---
 
 <!doctype html>
@@ -36,19 +40,20 @@ const { title, description } = Astro.props;
     <!-- Page info -->
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Social Media Meta Tags -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://www.finon.app/" />
-    <meta property="og:image" content="https://www.finon.app/og-image.webp" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
     <meta property="og:site_name" content="Finon" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="https://www.finon.app/og-image.webp" />
+    <meta name="twitter:image" content={socialImageURL} />
 
     <!-- iOS App Meta Tags -->
     <meta name="apple-itunes-app" content="app-id=6751505655" />
