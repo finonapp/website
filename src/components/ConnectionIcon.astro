@@ -47,7 +47,8 @@ const { disc, logo } = sizes[size];
 </span>
 
 <style>
-  /* Pop plus an expanding brand ring, played while .is-pinging is on (scripts/coinPing.ts). */
+  /* Pop plus an expanding brand ring, played while .is-pinging is on (scripts/coinPing.ts).
+     Both animate only scale and opacity, so they run on the compositor. */
   .coin-ping {
     position: absolute;
     inset: -2px;
@@ -65,17 +66,12 @@ const { disc, logo } = sizes[size];
   }
 
   @keyframes coin-pop {
-    0% {
+    0%,
+    100% {
       scale: 1;
-      box-shadow: var(--shadow-coin);
     }
     35% {
       scale: 1.14;
-      box-shadow: 0 0 0 6px var(--color-brand-tint), var(--shadow-coin-lg);
-    }
-    100% {
-      scale: 1;
-      box-shadow: var(--shadow-coin);
     }
   }
 

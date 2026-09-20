@@ -3,18 +3,16 @@
  * Features: "What makes [Finon] special?" with the app screenshot in the
  * middle and four text blocks around it. On lg it is a 3-column grid, two
  * blocks each side with a brand rule facing the phone; below lg the
- * screenshot comes first, then the blocks (1 column, 2 from md).
- *
- * The word "Finon" in the heading is the app icon tile. On lg, when the
- * screenshot rises past the middle of the viewport, the tile glides onto the
- * screenshot's top edge, and back again on the way down (scripts/dockTile.ts).
- * Reduced motion or no JS: heading sharp, tile in the heading.
+ * screenshot comes first, then the blocks (1 column, 2 from md). The word
+ * "Finon" in the heading is the app icon tile, which scripts/dockTile.ts
+ * docks onto the screenshot on lg.
  *
  * To swap the screenshot, replace src/assets/images/home_screenshot.png or
  * change the one import below.
  */
 import { Image } from "astro:assets";
 import RevealHeading from "./RevealHeading.astro";
+import appIcon from "../assets/app-icon.png";
 import homeScreenshot from "../assets/images/home_screenshot.png";
 
 // On lg the blocks face the phone: the left column is right-aligned with a
@@ -58,11 +56,11 @@ const features = [
       id="features-heading"
       text="What makes Finon special?"
       slotWord="Finon"
-      class="mx-auto mb-12 max-w-2xl text-center text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-balance text-ink sm:text-4xl lg:mb-16 lg:text-[40px]"
+      class="mb-12 lg:mb-16"
     >
-      {/* The app icon, reused from the PWA icon in public/. White tile on purpose, like the coins. */}
+      {/* The app icon (a copy of the PWA icon in public/), served at 72 and 144 px. White tile on purpose, like the coins. */}
       <span class="icon-tile pointer-events-none block overflow-hidden rounded-[22%] bg-white">
-        <img src="/web-app-manifest-512x512.png" width="72" height="72" alt="" decoding="async" draggable="false" class="block size-full" />
+        <Image src={appIcon} width={72} height={72} densities={[1, 2]} loading="eager" alt="" draggable="false" class="block size-full" />
       </span>
     </RevealHeading>
 
@@ -72,15 +70,18 @@ const features = [
         class="relative aspect-3/4 md:col-span-2 md:aspect-4/3 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:aspect-auto lg:min-h-[520px]"
         data-icon-target
       >
+        {/* The picture paints 273 px wide on phones and 292 px on lg (the box is taller than the 9:16 image);
+            the variants cover 1x, 1.75x, 2x and 3x screens. */}
         <Image
           src={homeScreenshot}
-          width={960}
+          widths={[300, 480, 600, 900]}
+          sizes="(min-width: 1024px) 292px, 273px"
           alt="Finon home screen showing total value with savings, stocks, cash and crypto"
           class="absolute inset-0 size-full max-w-none object-contain object-top drop-shadow-phone"
         />
       </div>
 
-      <!-- Text blocks. --i staggers their fade-in by 90ms each (see .fade-in in global.css). -->
+      <!-- Text blocks. They fade in on entry (.fade-in in global.css, started by the script below); --i staggers them 90ms each. -->
       {
         features.map((feature, i) => (
           <article
@@ -115,8 +116,8 @@ const features = [
     transform: translate(var(--dx, 0px), var(--dy, 0px)) scale(calc(72 / 56));
   }
   /* While docked the slot must not fade or blur the travelling tile. */
-  [data-features].is-docked :global(.object-reveal) {
-    --k: 1;
+  [data-features].is-docked :global(.slot-content) {
+    --progress: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -128,5 +129,7 @@ const features = [
 
 <script>
   import { initDockTile } from "../scripts/dockTile";
+  import { initFadeIn } from "../scripts/fadeIn";
   initDockTile();
+  initFadeIn();
 </script>

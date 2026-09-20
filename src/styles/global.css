@@ -6,6 +6,7 @@
   src: url("../assets/fonts/Onest.woff2") format("woff2-variations");
   font-weight: 100 900;
   font-style: normal;
+  font-display: swap;
 }
 
 /* Finon 2026 tokens, mirrored from app/apps/mobile/styles/global.ts (`ui`).

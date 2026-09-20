@@ -1,5 +1,5 @@
 ---
-/** Home page: hero with floating coins, features and FAQ on the halo background, then the CTA and footer. */
+/** Home page: hero with floating coins, features and FAQ on the halo background, then the CTA. Nav and footer frame the main landmark. */
 import ActionButton from "../components/ActionButton.astro";
 import Background from "../components/Background.astro";
 import CallToAction from "../components/CallToAction.astro";
@@ -17,38 +17,33 @@ import Layout from "../layouts/Layout.astro";
   title="Finon – Your All-in-One Financial Dashboard"
   description="Join the Finon waitlist and be the first to access your all-in-one financial dashboard. Track performance, gain insights, and stay in control of your finances from day one."
 >
-  <Background>
-    <Nav />
-
-    <!-- Hero: copy in the middle, coins floating around it on lg, a coin stack under the copy below lg. -->
-    <section class="relative flex min-h-[88svh] items-center overflow-hidden pt-28 pb-20 lg:pt-32 lg:pb-28">
-      <FloatingConnections />
-      <Container class="relative z-10">
-        <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
-          <h1 class="text-5xl font-semibold leading-[1.02] tracking-[-0.03em] text-balance text-ink sm:text-6xl lg:text-7xl">
-            All your <span class="font-bold text-brand">finances</span> in <span class="text-brand">one</span> place
-          </h1>
-          <p class="max-w-xl text-lg text-balance text-ink-muted lg:text-xl">
-            Gain a complete view of your portfolio to make smarter decisions and track your journey to success.
-          </p>
-          <div class="mt-2 flex flex-col items-center gap-3">
-            <ActionButton />
-            <p class="text-sm text-ink-faint">Free on iOS. Read-only access, always. UK-only.</p>
+  <Nav />
+  <main>
+    <Background>
+      <!-- Hero: copy in the middle, coins floating around it on lg, a coin stack under the copy below lg. -->
+      <section class="relative flex min-h-[88svh] items-center overflow-hidden pt-28 pb-20 lg:pt-32 lg:pb-28">
+        <FloatingConnections />
+        <Container class="relative z-10">
+          <div class="mx-auto flex max-w-3xl flex-col items-center gap-6 text-center">
+            <h1 class="text-5xl font-semibold leading-[1.02] tracking-[-0.03em] text-balance text-ink sm:text-6xl lg:text-7xl">
+              All your <span class="font-bold text-brand">finances</span> in <span class="text-brand">one</span> place
+            </h1>
+            <p class="max-w-xl text-lg text-balance text-ink-muted lg:text-xl">
+              Gain a complete view of your portfolio to make smarter decisions and track your journey to success.
+            </p>
+            <div class="mt-2 flex flex-col items-center gap-3">
+              <ActionButton />
+              <p class="text-sm text-ink-faint">Free on iOS. Read-only access, always. UK-only.</p>
+            </div>
+            <ConnectionStack class="mt-6 lg:hidden" />
           </div>
-          <ConnectionStack class="mt-6 lg:hidden" />
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
 
-    <Features />
-    <FAQ />
-  </Background>
-
-  <CallToAction />
+      <Features />
+      <FAQ />
+    </Background>
+    <CallToAction />
+  </main>
   <Footer />
 </Layout>
-
-<script>
-  import { initFadeIn } from "../scripts/fadeIn";
-  initFadeIn();
-</script>

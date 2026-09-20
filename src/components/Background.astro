@@ -6,7 +6,7 @@
 ---
 
 <div class="halo relative isolate overflow-hidden">
-  <div class="texture pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="texture pointer-events-none absolute inset-0 opacity-32 dark:opacity-14" aria-hidden="true"></div>
   <div class="relative">
     <slot />
   </div>
@@ -29,17 +29,11 @@
   }
 
   /* Ink dots faded along a diagonal. Mask colours are alpha only: black keeps,
-     transparent hides. */
+     transparent hides. Opacity is a utility on the element, lower in dark mode
+     where the dots read stronger. */
   .texture {
-    opacity: 0.32;
     background-image: radial-gradient(circle, var(--color-ink) 0.75px, transparent 1.2px);
     background-size: 3.5px 3.5px;
     mask-image: linear-gradient(110deg, #000, transparent 46%, #000);
-  }
-  /* Ink dots read stronger on a dark page; ease them off. */
-  @media (prefers-color-scheme: dark) {
-    .texture {
-      opacity: 0.14;
-    }
   }
 </style>

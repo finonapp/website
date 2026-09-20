@@ -7,13 +7,13 @@
  */
 import { Menu } from "@lucide/astro";
 import Logo from "../assets/finon-logo-word.svg";
+import { APP_STORE_URL } from "../data/links";
 
 const links = [
   { href: "/#", label: "Home" },
   { href: "/#features", label: "Features" },
   { href: "/#faq", label: "FAQ" },
 ];
-const appStore = "https://apps.apple.com/gb/app/finon/id6751505655";
 ---
 
 <header class="fixed inset-x-0 top-0 z-30 px-4 pt-4 sm:px-6">
@@ -42,7 +42,7 @@ const appStore = "https://apps.apple.com/gb/app/finon/id6751505655";
 
     <div class="flex items-center gap-1">
       <a
-        href={appStore}
+        href={APP_STORE_URL}
         target="_blank"
         rel="noopener"
         class="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"

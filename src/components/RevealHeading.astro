@@ -1,17 +1,18 @@
 ---
 /**
- * RevealHeading: an h2 whose letters rise and sharpen in from left to right
- * as it scrolls up, and sink back out on the way down. scripts/letterReveal.ts
- * writes --reveal (0 to 1) on the element; the CSS below turns it into
- * per-letter opacity, blur and lift. One word can be swapped for the slot
+ * RevealHeading: the site's section title, an h2 whose letters rise and
+ * sharpen in from left to right as it scrolls up and sink back on the way
+ * down (scripts/letterReveal.ts writes --reveal, the CSS below turns it into
+ * per-letter opacity, blur and lift). One word can be swapped for the slot
  * content: Features puts the app icon tile where "Finon" goes. Screen readers
- * get the plain text. Reduced motion or no JS: a plain sharp heading.
+ * get the plain text.
  */
 interface Props {
   text: string;
   /** The word to replace with the slot content, if any. */
   slotWord?: string;
   id?: string;
+  /** Spacing only (margins, padding). The typography lives in this component. */
   class?: string;
 }
 const { text, slotWord, id, class: className = "" } = Astro.props;
@@ -29,7 +30,15 @@ const words = text.split(" ").map((word): Word => {
 });
 ---
 
-<h2 id={id} class:list={["reveal-heading", className]} data-reveal-heading style={`--units:${unitCount}`}>
+<h2
+  id={id}
+  class:list={[
+    "reveal-heading mx-auto max-w-2xl text-center text-3xl font-semibold leading-[1.15] tracking-[-0.02em] text-balance text-ink sm:text-4xl lg:text-[40px]",
+    className,
+  ]}
+  data-reveal-heading
+  style={`--units:${unitCount}`}
+>
   <span class="sr-only">{text}</span>
   <span aria-hidden="true">
     {
@@ -37,8 +46,8 @@ const words = text.split(" ").map((word): Word => {
         <>
           {i > 0 && " "}
           {word.kind === "slot" ? (
-            <span class="object-slot" data-reveal-slot>
-              <span class="l object-reveal" style={`--i:${word.index}`}><slot /></span>
+            <span class="slot-box" data-reveal-slot>
+              <span class="l slot-content" style={`--i:${word.index}`}><slot /></span>
             </span>
           ) : (
             <span class="word">{word.letters.map((letter) => <span class="l" style={`--i:${letter.index}`}>{letter.char}</span>)}</span>
@@ -62,20 +71,19 @@ const words = text.split(" ").map((word): Word => {
   .word {
     white-space: nowrap; /* keeps a word's letters on one line */
   }
-  /* .l is one unit: a letter, or the object slot (kept short because it is
-     written once per letter). --k is the unit's own progress, 0..1. Features
-     sets it to 1 on the slot while the tile is docked, so the travelling tile
-     is never faded or blurred. */
+  /* .l is one unit: a letter, or the slot. --progress is the unit's own
+     progress, 0..1. Features sets it to 1 on the slot while the tile is
+     docked, so the travelling tile is never faded or blurred. */
   .l {
-    --k: clamp(0, calc((var(--reveal) - var(--i) * var(--stagger)) / var(--window)), 1);
+    --progress: clamp(0, calc((var(--reveal) - var(--i) * var(--stagger)) / var(--window)), 1);
     display: inline-block;
-    opacity: var(--k);
-    filter: blur(calc((1 - var(--k)) * 8px));
-    transform: translateY(calc((1 - var(--k)) * 0.6em));
+    opacity: var(--progress);
+    filter: blur(calc((1 - var(--progress)) * 8px));
+    transform: translateY(calc((1 - var(--progress)) * 0.6em));
   }
-  /* The slot keeps its footprint whether the object is in it or docked away,
+  /* The slot keeps its footprint whether the tile is in it or docked away,
      so the heading never reflows. */
-  .object-slot {
+  .slot-box {
     position: relative;
     display: inline-grid;
     place-items: center;
@@ -86,7 +94,7 @@ const words = text.split(" ").map((word): Word => {
   }
   /* The blur filter makes this a stacking context, so it needs its own
      z-index to sit above the section below. */
-  .object-reveal {
+  .slot-content {
     position: relative;
     z-index: 20;
   }

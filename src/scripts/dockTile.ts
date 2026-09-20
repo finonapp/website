@@ -1,12 +1,8 @@
 /**
- * Docks the Finon tile (Features.astro) onto the screenshot, desktop only.
- * The tile starts in the heading's slot `[data-reveal-slot]`. When the
- * screenshot `[data-icon-target]` rises above the middle of the viewport the
- * section gets `.is-docked` and --dx / --dy hold the vector from the slot to
- * the middle of the screenshot's top edge; the CSS transition in
- * Features.astro glides the tile there. When the screenshot drops back below
- * the middle the class comes off and the tile glides home. Below lg, under
- * reduced motion or without JS the tile stays in the heading.
+ * Docks the app icon tile (Features.astro) onto the screenshot on lg screens.
+ * Toggles .is-docked on the section and writes --dx / --dy, the slot to
+ * screenshot vector; the CSS transition in Features.astro does the gliding.
+ * Below lg, under reduced motion or without JS the tile stays in the heading.
  */
 export function initDockTile(): void {
   const section = document.querySelector<HTMLElement>("[data-features]");

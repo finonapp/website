@@ -53,8 +53,7 @@ const { title, description } = Astro.props;
     <!-- iOS App Meta Tags -->
     <meta name="apple-itunes-app" content="app-id=6751505655" />
 
-    <!-- Analytics -->
-    <script src="https://analytics.ahrefs.com/analytics.js" data-key="kRGzvaQ72K/9vtIvgFTYSQ" async></script>
+    <!-- Analytics: PostHog only, loaded once the page is idle (see components/Posthog.astro). -->
     <Posthog />
   </head>
   <body class="bg-page text-ink">

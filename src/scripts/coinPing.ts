@@ -1,21 +1,20 @@
 /**
  * Coin ping: about every 2.8 s one random coin in a group pops and sends out
- * a brand ring (the CSS lives in ConnectionIcon.astro and plays while the
- * `.is-pinging` class is on). Never the same coin twice in a row. Skips
- * groups that are display:none (the hero shows one of its two coin groups per
- * breakpoint) and pauses while the tab is hidden. Off under reduced motion.
+ * a brand ring (the CSS in ConnectionIcon.astro plays while `.is-pinging` is
+ * on), never the same coin twice in a row. Skips groups that are display:none,
+ * pauses while the tab is hidden, and is off under reduced motion.
  */
 const EVERY_MS = 2800; // average gap between pings
 const JITTER_MS = 900; // each gap is EVERY_MS plus or minus up to this
 const FIRST_PING_MS = 1200;
-const PING_LENGTH_MS = 1000; // longer than the CSS animations, so the class comes off cleanly
+const PING_LENGTH_MS = 1000; // longer than the CSS animations and shorter than the smallest gap, so the class is off again before the next ping
 
 function startGroup(group: HTMLElement): void {
   const coins = Array.from(group.querySelectorAll<HTMLElement>(".connection-icon"));
   if (coins.length === 0) return;
 
   let last = -1;
-  let removePing = 0;
+  let removePingTimer = 0;
 
   const ping = () => {
     // Pick a coin, never the same one twice in a row.
@@ -24,14 +23,13 @@ function startGroup(group: HTMLElement): void {
     last = next;
 
     const coin = coins[next];
-    coin.classList.remove("is-pinging");
-    void coin.offsetWidth; // forces a reflow so the animation restarts if it was still running
     coin.classList.add("is-pinging");
-    window.clearTimeout(removePing);
-    removePing = window.setTimeout(() => coin.classList.remove("is-pinging"), PING_LENGTH_MS);
+    window.clearTimeout(removePingTimer);
+    removePingTimer = window.setTimeout(() => coin.classList.remove("is-pinging"), PING_LENGTH_MS);
   };
 
   const tick = () => {
+    // offsetParent is null while the group is display:none (the hero shows one coin group per breakpoint).
     const visible = !document.hidden && group.offsetParent !== null;
     if (visible) ping();
     const jitter = (Math.random() * 2 - 1) * JITTER_MS;

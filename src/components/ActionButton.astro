@@ -2,8 +2,9 @@
 /** ActionButton: the App Store badge, linking to Finon on the UK App Store. */
 import { Image } from "astro:assets";
 import AppleBadge from "../assets/app-store-badge.svg";
+import { APP_STORE_URL } from "../data/links";
 ---
 
-<a href="https://apps.apple.com/gb/app/finon/id6751505655" target="_blank" rel="noopener" class="inline-flex justify-center">
+<a href={APP_STORE_URL} target="_blank" rel="noopener" class="inline-flex justify-center">
   <Image src={AppleBadge} width={150} alt="Download on the App Store" />
 </a>

@@ -14,47 +14,49 @@ import Layout from "../layouts/Layout.astro";
   description="We're here to help you. Get the support you need, when you need it."
 >
   <Nav />
-  <div class="pt-32 pb-16">
-    <Container>
-      <h1 class="font-bold text-4xl text-center">Support</h1>
-      <p class="text-center font-thin">
-        We're here to help you. Get the support you need, when you need it.
-      </p>
-    </Container>
-  </div>
+  <main>
+    <div class="pt-32 pb-16">
+      <Container>
+        <h1 class="font-bold text-4xl text-center">Support</h1>
+        <p class="text-center font-thin">
+          We're here to help you. Get the support you need, when you need it.
+        </p>
+      </Container>
+    </div>
 
-  <section>
-    <Container class="flex flex-col gap-4">
-      <h2 class="text-2xl font-bold">Contact Information</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <article
-          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
-        >
-          <Mail class="size-12" />
-          <h3 class="font-bold mb-4">Email Support</h3>
-          <p class="text-sm">Get help via email</p>
-          <a
-            href="mailto:support@finon.app"
-            class="flex gap-2 justify-center items-center"
-            ><Mail class="size-3" /><span>support@finon.app</span></a
+    <section>
+      <Container class="flex flex-col gap-4">
+        <h2 class="text-2xl font-bold">Contact Information</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <article
+            class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
           >
-        </article>
-        <article
-          class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
-        >
-          <DiscordIcon class="size-12 fill-ink" />
-          <h3 class="font-bold mb-4">Discord Support</h3>
-          <p class="text-sm">Join our discord and drop us a question</p>
-          <a
-            href="https://discord.gg/6Nye5rBtGf"
-            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
-            target="_blank">Join our server</a
+            <Mail class="size-12" />
+            <h3 class="font-bold mb-4">Email Support</h3>
+            <p class="text-sm">Get help via email</p>
+            <a
+              href="mailto:support@finon.app"
+              class="flex gap-2 justify-center items-center"
+              ><Mail class="size-3" /><span>support@finon.app</span></a
+            >
+          </article>
+          <article
+            class="flex flex-col justify-center items-center py-8 px-12 gap-2 rounded-2xl border border-line bg-surface"
           >
-        </article>
-      </div>
-    </Container>
-  </section>
-  <FAQ />
-  <CallToAction />
+            <DiscordIcon class="size-12 fill-ink" />
+            <h3 class="font-bold mb-4">Discord Support</h3>
+            <p class="text-sm">Join our discord and drop us a question</p>
+            <a
+              href="https://discord.gg/6Nye5rBtGf"
+              class="inline-flex items-center justify-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+              target="_blank">Join our server</a
+            >
+          </article>
+        </div>
+      </Container>
+    </section>
+    <FAQ />
+    <CallToAction />
+  </main>
   <Footer />
 </Layout>
