@@ -61,7 +61,7 @@ const socialImageURL = new URL("/og-image.webp", Astro.site);
     <!-- iOS App Meta Tags -->
     <meta name="apple-itunes-app" content="app-id=6751505655" />
 
-    <!-- Analytics: PostHog only, loaded once the page is idle (see components/Posthog.astro). -->
+    <!-- Analytics: PostHog loads when idle or on an App Store click (see components/Posthog.astro). -->
     <Posthog />
   </head>
   <body class="bg-page text-ink">
