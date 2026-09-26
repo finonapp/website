@@ -1,0 +1,29 @@
+---
+/** FounderNote: a compact founder quote between the homepage features and FAQ. */
+import { Image } from "astro:assets";
+import founderPortrait from "../assets/images/founder-ayoub.avif";
+---
+
+<section id="founder" aria-labelledby="founder-heading" class="scroll-mt-32 px-6 py-6 sm:px-8 lg:py-8">
+  <h2 id="founder-heading" class="sr-only">Why I built Finon</h2>
+  <figure class="mx-auto grid max-w-5xl grid-cols-[64px_1fr] items-center gap-x-5 gap-y-3 rounded-2xl border border-line bg-surface p-5 sm:grid-cols-[96px_1fr] sm:gap-x-6 sm:p-6">
+    <Image
+      src={founderPortrait}
+      widths={[64, 96, 128, 192, 288]}
+      sizes="(min-width: 640px) 96px, 64px"
+      alt="Ayoub, founder of Finon"
+      loading="lazy"
+      decoding="async"
+      class="col-start-1 row-start-1 aspect-square w-16 rounded-full object-cover sm:row-span-2 sm:w-24"
+    />
+    <figcaption class="col-start-2 row-start-1 text-sm sm:row-start-1 sm:flex sm:items-baseline sm:gap-2">
+      <p class="font-semibold text-ink">Ayoub</p>
+      <p class="text-ink-muted">Founder of Finon</p>
+    </figcaption>
+    <blockquote class="col-span-2 row-start-2 text-base leading-relaxed text-ink-muted sm:col-span-1 sm:col-start-2 sm:row-start-2">
+      <p>
+        “I wanted one clear picture of my money, without jumping between banking, investment and crypto apps. I built Finon to see what it all adds up to, and to help you get that same clarity.”
+      </p>
+    </blockquote>
+  </figure>
+</section>
