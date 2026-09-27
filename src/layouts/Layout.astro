@@ -1,10 +1,11 @@
 ---
 /**
  * Layout: the document shell. Head tags (icons, SEO, social cards, App Store
- * banner, attribution) and the body colours, which come from the tokens in
+ * banner, attribution, analytics) and the body colours, which come from the tokens in
  * styles/global.css and flip with the system colour scheme.
  */
 import AppsFlyer from "../components/AppsFlyer.astro";
+import Posthog from "../components/Posthog.astro";
 import "../styles/global.css";
 
 interface Props {
@@ -62,6 +63,7 @@ const socialImageURL = new URL("/og-image.webp", Astro.site);
     <meta name="apple-itunes-app" content="app-id=6751505655" />
 
     <AppsFlyer />
+    <Posthog />
   </head>
   <body class="bg-page text-ink">
     <slot />

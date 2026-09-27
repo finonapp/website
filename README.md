@@ -33,7 +33,13 @@ return `Access-Control-Allow-Origin: *` for the credential-free browser request.
 
 Project skills for Claude Code live in `../ai-skills/` (see the repo root CLAUDE.md).
 
-## App download attribution
+## Analytics and app download attribution
+
+`src/components/Posthog.astro` runs PostHog behavior analytics against the existing EU
+project, loading when the browser is idle after page load. It uses built-in
+pageview and interaction capture without a custom download-click event.
+PostHog's automatic campaign-parameter and referrer persistence is disabled;
+AppsFlyer handles attribution. Pageviews and interaction autocapture remain enabled.
 
 `src/components/AppsFlyer.astro` runs AppsFlyer's OneLink Smart Script on every
 page and replaces links matching `APP_STORE_URL` with an attributed
