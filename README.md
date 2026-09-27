@@ -32,3 +32,20 @@ builds can still complete if the API is unavailable. The public API route must
 return `Access-Control-Allow-Origin: *` for the credential-free browser request.
 
 Project skills for Claude Code live in `../ai-skills/` (see the repo root CLAUDE.md).
+
+## App download attribution
+
+`src/components/AppsFlyer.astro` runs AppsFlyer's OneLink Smart Script on every
+page and replaces links matching `APP_STORE_URL` with an attributed
+`https://link.finon.app/UNm5` URL. The original App Store links remain the
+fallback when JavaScript or the SDK is unavailable.
+
+The configuration from the supplied AppsFlyer export maps `utm_source`, then
+`utm_content`, to the media source, defaults to `any_source`, enables SEO
+attribution, and includes `af_ss_ui=true`. The SDK preserves incoming parameters
+across pages. This is web-to-app attribution, not pageview or session analytics.
+
+`public/scripts/appsflyer-smart-script-2.10.4.js` is the unmodified SDK code from
+that export, served locally and deferred so it does not block HTML parsing.
+When updating it, replace the versioned file and update the component's script
+path. See the [AppsFlyer integration guide](https://dev.appsflyer.com/hc/docs/dl_smart_script_v2).
