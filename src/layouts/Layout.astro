@@ -42,6 +42,7 @@ const socialImageURL = new URL("/og-image.webp", Astro.site);
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="describedby" type="text/plain" href={new URL("/llms.txt", Astro.site)} />
 
     <!-- Social Media Meta Tags -->
     <meta property="og:title" content={title} />

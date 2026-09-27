@@ -1,0 +1,43 @@
+# Finon
+
+Finon is a personal finance app operated by Finon Ltd for UK users on iPhone and iPad.
+
+The app brings bank balances, investments and crypto into one read-only dashboard to help users follow portfolio value, understand asset allocation and see their tracked net worth.
+
+## Features
+
+- Bank balance, investment and crypto tracking
+- Portfolio value and history
+- Asset allocation and tracked net worth
+- Connections to supported banks, investment platforms and crypto exchanges
+- Statement imports from Freetrade and Moneybox, updated by uploading new statements
+- Manual entry for commodities such as gold and silver
+- Read-only account information; Finon cannot move money or place trades
+- Free plan with up to 2 connections and Finon Pro for additional connections
+
+## Product
+
+- Homepage: https://www.finon.app/
+- Features: https://www.finon.app/#features
+- Connections: https://www.finon.app/connections
+- FAQ: https://www.finon.app/support#faq
+- Support: https://www.finon.app/support
+- Download: https://apps.apple.com/gb/app/finon/id6751505655
+- Terms of Use: https://www.finon.app/terms
+- Privacy Policy: https://www.finon.app/privacy
+- AI Guidance: https://www.finon.app/ai.txt
+
+## Intended Audience
+
+- UK savers and investors
+- People with accounts across multiple banks, brokers and crypto exchanges
+- People tracking stocks, crypto and commodities
+- iPhone and iPad users seeking a clearer view of their finances
+
+## One-Line Description
+
+All your finances in one place.
+
+## Summary
+
+Finon helps UK users track bank balances, investments, crypto and manually entered commodities in one place. It provides portfolio history and asset breakdowns while funds remain with the user's financial institutions. Connection methods and coverage vary by provider; check the connections page for current availability and the app for current prices and plan details. Finon does not provide financial or investment advice.

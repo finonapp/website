@@ -24,6 +24,28 @@ The production origin is set with `site` in `astro.config.mjs`. The shared layou
 uses it for each page's canonical and social URLs. Keep `public/sitemap.xml` in
 sync when adding pages.
 
+## AI discovery files
+
+The files follow the requested SEO Loupe skeletons, with Finon's own content:
+
+- `public/ai.txt` follows [SEO Loupe's ai.txt](https://www.seoloupe.com/ai.txt):
+  organisation, description, topics, audience, citation preference, important
+  pages, brand messaging, value proposition, contact and review date.
+- `public/llms.txt` follows [SEO Loupe's llms.txt](https://www.seoloupe.com/llms.txt):
+  introduction, Features, Product, Intended Audience, One-Line Description and
+  Summary. The shared layout advertises it with `rel="describedby"`.
+
+These files provide public product context and citation guidance. They do not
+declare an AI-training preference or guarantee inclusion in AI answers.
+
+Astro copies both files to the site root. Keep their facts aligned with the
+features, FAQ and policy pages when the product changes; update `Last Updated`
+in `ai.txt` when reviewing it. Link to current connection availability and
+in-app pricing instead of copying a provider list or prices. Use existing
+canonical URLs; do not add links to Markdown copies unless those pages exist.
+
+## Connections directory
+
 `/connections` reads `https://api.finon.app/connect/list` at build time for
 searchable HTML, then fetches it on page load and every 60 seconds while the tab
 is visible. Names, logos, asset types and availability all come from the API.
