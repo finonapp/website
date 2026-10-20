@@ -1,19 +1,20 @@
 ---
 /**
- * AppsFlyer: use Finon's Smart Script configuration to attribute App Store
- * visits. Load on every page so incoming attribution survives navigation.
- * Direct App Store links remain usable if the SDK cannot generate a OneLink.
+ * AppsFlyer: use Finon's Smart Script configuration to attribute downloads.
+ * Load on every page so incoming attribution survives navigation. Links
+ * marked data-onelink already point at the plain OneLink, so they keep
+ * working if the SDK cannot generate an attributed URL.
  */
-import { APP_STORE_URL } from "../data/links";
+import { ONELINK_URL } from "../data/links";
 ---
 
 <script is:inline src="/scripts/appsflyer-smart-script-2.10.4.js" defer></script>
-<script is:inline define:vars={{ appStoreUrl: APP_STORE_URL }}>
+<script is:inline define:vars={{ oneLinkUrl: ONELINK_URL }}>
   // Deferred scripts finish before DOMContentLoaded, when every CTA is present.
   document.addEventListener("DOMContentLoaded", () => {
     try {
       const result = window.AF_SMART_SCRIPT?.generateOneLinkURL({
-        oneLinkURL: "https://link.finon.app/UNm5",
+        oneLinkURL: oneLinkUrl,
         SEO: true,
         afParameters: {
           mediaSource: {
@@ -26,12 +27,12 @@ import { APP_STORE_URL } from "../data/links";
 
       if (!result?.clickURL) return;
 
-      document.querySelectorAll("a[href]").forEach((link) => {
-        if (link.href === appStoreUrl) link.href = result.clickURL;
+      document.querySelectorAll("a[data-onelink]").forEach((link) => {
+        link.href = result.clickURL;
       });
     } catch (error) {
       // Storage restrictions or SDK errors must not prevent app downloads.
-      console.warn("AppsFlyer attribution unavailable; using App Store links.", error);
+      console.warn("AppsFlyer attribution unavailable; using the plain OneLink.", error);
     }
   }, { once: true });
 </script>

@@ -7,7 +7,7 @@
  */
 import { Menu } from "@lucide/astro";
 import Logo from "../assets/finon-logo-word.svg";
-import { APP_STORE_URL } from "../data/links";
+import { ONELINK_URL } from "../data/links";
 
 const links = [
   { href: "/#", label: "Home" },
@@ -43,7 +43,8 @@ const links = [
 
     <div class="flex items-center gap-1">
       <a
-        href={APP_STORE_URL}
+        href={ONELINK_URL}
+        data-onelink
         target="_blank"
         rel="noopener"
         class="rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"

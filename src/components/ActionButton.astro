@@ -1,10 +1,39 @@
 ---
-/** ActionButton: the App Store badge, linking to Finon on the UK App Store. */
+/**
+ * ActionButton: App Store and Google Play badges. Both link straight to their
+ * store (desktop, where installs can't be attributed). On iOS/Android an
+ * inline script hides the other badge and switches the remaining one to the
+ * AppsFlyer OneLink, marking it data-onelink so AppsFlyer.astro attributes it.
+ */
 import { Image } from "astro:assets";
 import AppleBadge from "../assets/app-store-badge.svg";
-import { APP_STORE_URL } from "../data/links";
+import GoogleBadge from "../assets/google-play-badge.svg";
+import { APP_STORE_URL, ONELINK_URL, PLAY_STORE_URL } from "../data/links";
 ---
 
-<a href={APP_STORE_URL} target="_blank" rel="noopener" class="inline-flex justify-center">
-  <Image src={AppleBadge} width={150} alt="Download on the App Store" class="pointer-events-none" draggable="false" />
-</a>
+<div class="flex flex-wrap items-center justify-center gap-3">
+  <a href={APP_STORE_URL} data-onelink-url={ONELINK_URL} data-store="ios" target="_blank" rel="noopener" class="inline-flex justify-center">
+    <Image src={AppleBadge} width={150} height={50} alt="Download on the App Store" class="pointer-events-none h-[50px] w-auto" draggable="false" />
+  </a>
+  <a href={PLAY_STORE_URL} data-onelink-url={ONELINK_URL} data-store="android" target="_blank" rel="noopener" class="inline-flex justify-center">
+    <Image src={GoogleBadge} width={169} height={50} alt="Get it on Google Play" class="pointer-events-none h-[50px] w-auto" draggable="false" />
+  </a>
+</div>
+
+<script is:inline>
+  // Runs right after the markup, so the wrong badge never flashes.
+  (() => {
+    const ua = navigator.userAgent;
+    const isIOS = /iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && navigator.maxTouchPoints > 1);
+    const platform = isIOS ? "ios" : /Android/i.test(ua) ? "android" : null;
+    if (!platform) return;
+    document.currentScript.previousElementSibling.querySelectorAll("[data-store]").forEach((badge) => {
+      if (badge.dataset.store !== platform) {
+        badge.style.display = "none";
+        return;
+      }
+      badge.href = badge.dataset.onelinkUrl;
+      badge.setAttribute("data-onelink", "");
+    });
+  })();
+</script>
