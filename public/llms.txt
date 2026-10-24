@@ -1,6 +1,6 @@
 # Finon
 
-Finon is a personal finance app operated by Finon Ltd for UK users on iPhone and iPad.
+Finon is a personal finance app operated by Finon Ltd for UK users on iOS and Android.
 
 The app brings bank balances, investments and crypto into one read-only dashboard to help users follow portfolio value, understand asset allocation and see their tracked net worth.
 
@@ -22,7 +22,8 @@ The app brings bank balances, investments and crypto into one read-only dashboar
 - Connections: https://www.finon.app/connections
 - FAQ: https://www.finon.app/support#faq
 - Support: https://www.finon.app/support
-- Download: https://apps.apple.com/gb/app/finon/id6751505655
+- Download (iOS): https://apps.apple.com/gb/app/finon/id6751505655
+- Download (Android): https://play.google.com/store/apps/details?id=app.finon
 - Terms of Use: https://www.finon.app/terms
 - Privacy Policy: https://www.finon.app/privacy
 - AI Guidance: https://www.finon.app/ai.txt
@@ -32,7 +33,7 @@ The app brings bank balances, investments and crypto into one read-only dashboar
 - UK savers and investors
 - People with accounts across multiple banks, brokers and crypto exchanges
 - People tracking stocks, crypto and commodities
-- iPhone and iPad users seeking a clearer view of their finances
+- iPhone and Android users seeking a clearer view of their finances
 
 ## One-Line Description
 
