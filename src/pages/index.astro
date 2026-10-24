@@ -11,12 +11,41 @@ import FloatingConnections from "../components/FloatingConnections.astro";
 import Footer from "../components/Footer.astro";
 import FounderNote from "../components/FounderNote.astro";
 import Nav from "../components/Nav.astro";
+import { FAQ_ITEMS } from "../data/faq";
+import { APP_STORE_URL, PLAY_STORE_URL } from "../data/links";
 import Layout from "../layouts/Layout.astro";
+
+const schema = [
+  {
+    "@type": "MobileApplication",
+    "@id": new URL("/#app", Astro.site).href,
+    name: "Finon",
+    description:
+      "Personal finance app for UK users. Track bank balances, investments and crypto in one read-only dashboard.",
+    applicationCategory: "FinanceApplication",
+    operatingSystem: "iOS, Android",
+    url: new URL("/", Astro.site).href,
+    installUrl: [APP_STORE_URL, PLAY_STORE_URL],
+    countriesSupported: "GB",
+    inLanguage: "en-GB",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "GBP" },
+    publisher: { "@id": new URL("/#organization", Astro.site).href },
+  },
+  {
+    "@type": "FAQPage",
+    mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: answer },
+    })),
+  },
+];
 ---
 
 <Layout
   title="Finon – Personal Financial App to Track Investments"
   description="Track investments, bank accounts and crypto with Finon, a personal financial app for UK users. See your portfolio in one read-only dashboard."
+  schema={schema}
 >
   <Nav />
   <main>

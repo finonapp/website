@@ -6,17 +6,46 @@
  */
 import AppsFlyer from "../components/AppsFlyer.astro";
 import Posthog from "../components/Posthog.astro";
+import { APP_STORE_URL, DISCORD_URL, PLAY_STORE_URL } from "../data/links";
 import "../styles/global.css";
 
 interface Props {
   title: string;
   description: string;
+  /** Extra JSON-LD nodes for this page, added to the site-wide Organization and WebSite. */
+  schema?: Record<string, unknown>[];
 }
-const { title, description } = Astro.props;
+const { title, description, schema = [] } = Astro.props;
 // Match the extensionless URLs in our links and sitemap, without query parameters.
 const pathname = Astro.url.pathname.replace(/\/+$/, "") || "/";
 const canonicalURL = new URL(pathname, Astro.site);
 const socialImageURL = new URL("/og-image.webp", Astro.site);
+
+const siteURL = new URL("/", Astro.site).href;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteURL}#organization`,
+      name: "Finon",
+      legalName: "Finon Ltd",
+      url: siteURL,
+      logo: new URL("/web-app-manifest-512x512.png", Astro.site).href,
+      email: "support@finon.app",
+      sameAs: [DISCORD_URL, APP_STORE_URL, PLAY_STORE_URL],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteURL}#website`,
+      url: siteURL,
+      name: "Finon",
+      inLanguage: "en-GB",
+      publisher: { "@id": `${siteURL}#organization` },
+    },
+    ...schema,
+  ],
+};
 ---
 
 <!doctype html>
@@ -62,6 +91,8 @@ const socialImageURL = new URL("/og-image.webp", Astro.site);
 
     <!-- iOS App Meta Tags -->
     <meta name="apple-itunes-app" content="app-id=6751505655" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <AppsFlyer />
     <Posthog />
