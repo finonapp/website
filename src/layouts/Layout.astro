@@ -71,6 +71,8 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
+    <link rel="alternate" hreflang="en-GB" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
     <link rel="describedby" type="text/plain" href={new URL("/llms.txt", Astro.site)} />
 
     <!-- Social Media Meta Tags -->
@@ -83,6 +85,7 @@ const jsonLd = {
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Finon: all your finances in one place, shown on the Finon home screen" />
     <meta property="og:site_name" content="Finon" />
+    <meta property="og:locale" content="en_GB" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
