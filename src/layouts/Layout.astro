@@ -6,7 +6,7 @@
  */
 import AppsFlyer from "../components/AppsFlyer.astro";
 import Posthog from "../components/Posthog.astro";
-import { APP_STORE_URL, DISCORD_URL, PLAY_STORE_URL } from "../data/links";
+import { APP_STORE_URL, DISCORD_URL, LINKEDIN_URL, PLAY_STORE_URL } from "../data/links";
 import "../styles/global.css";
 
 interface Props {
@@ -33,7 +33,7 @@ const jsonLd = {
       url: siteURL,
       logo: new URL("/web-app-manifest-512x512.png", Astro.site).href,
       email: "support@finon.app",
-      sameAs: [DISCORD_URL, APP_STORE_URL, PLAY_STORE_URL],
+      sameAs: [LINKEDIN_URL, DISCORD_URL, APP_STORE_URL, PLAY_STORE_URL],
     },
     {
       "@type": "WebSite",

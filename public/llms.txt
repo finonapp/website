@@ -28,6 +28,10 @@ The app brings bank balances, investments and crypto into one read-only dashboar
 - Privacy Policy: https://www.finon.app/privacy
 - AI Guidance: https://www.finon.app/ai.txt
 
+## Social
+
+- LinkedIn: https://www.linkedin.com/company/finon-uk
+
 ## Intended Audience
 
 - UK savers and investors

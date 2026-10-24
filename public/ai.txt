@@ -39,6 +39,9 @@ https://apps.apple.com/gb/app/finon/id6751505655
 https://play.google.com/store/apps/details?id=app.finon
 https://www.finon.app/llms.txt
 
+Social:
+https://www.linkedin.com/company/finon-uk
+
 Brand Messaging:
 Finon focuses on helping people see what their finances add up to without switching between banking, investment and crypto apps.
 It provides a read-only view: funds stay with the user's bank, broker or exchange. Finon cannot move money or place trades and does not provide financial or investment advice.
