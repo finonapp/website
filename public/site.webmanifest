@@ -1,6 +1,8 @@
 {
 	"name": "Finon",
 	"short_name": "Finon",
+	"description": "Track bank balances, investments and crypto in one read-only dashboard. A free UK personal financial app for iPhone and Android.",
+	"lang": "en-GB",
 	"icons": [
 		{
 			"src": "/web-app-manifest-192x192.png",
@@ -17,5 +19,17 @@
 	],
 	"theme_color": "#ffffff",
 	"background_color": "#ffffff",
-	"display": "standalone"
+	"display": "standalone",
+	"related_applications": [
+		{
+			"platform": "play",
+			"url": "https://play.google.com/store/apps/details?id=app.finon",
+			"id": "app.finon"
+		},
+		{
+			"platform": "itunes",
+			"url": "https://apps.apple.com/gb/app/finon/id6751505655"
+		}
+	],
+	"prefer_related_applications": false
 }
