@@ -33,6 +33,11 @@ export const FAQ_ITEMS: FaqItem[] = [
     answer: "Personal financial apps cover different needs, from budgeting to investment tracking. Finon focuses on bringing your balances and investments into one view, with portfolio history and an asset breakdown. When choosing an app, check its supported accounts, connection methods, pricing and the features you need.",
   },
   {
+    question: "Is Finon safe?",
+    answer: "Finon is read-only: it cannot move money or place trades, and your funds stay with your bank, broker or exchange. Bank connections use Open Banking authorisation, and some investment and crypto connections use API keys with read-only permissions. Your connection credentials and other sensitive data are encrypted. No online service can guarantee absolute security, and you can read how we handle your data in our privacy policy.",
+    link: { href: "/privacy", text: "Read the privacy policy" },
+  },
+  {
     question: "Where is Finon available?",
     answer: "Finon is available on iPhone and Android for users in the UK. You can download it from the UK App Store or Google Play and follow the in-app steps to add your first account.",
   },
