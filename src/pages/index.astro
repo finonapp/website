@@ -32,6 +32,13 @@ const schema = [
     publisher: { "@id": new URL("/#organization", Astro.site).href },
   },
   {
+    "@type": "Person",
+    "@id": new URL("/#founder", Astro.site).href,
+    name: "Ayoub",
+    jobTitle: "Founder",
+    worksFor: { "@id": new URL("/#organization", Astro.site).href },
+  },
+  {
     "@type": "FAQPage",
     mainEntity: FAQ_ITEMS.map(({ question, answer }) => ({
       "@type": "Question",
@@ -59,8 +66,8 @@ const schema = [
               All your <span class="font-bold text-brand">finances</span> in <span class="text-brand">one</span> place
             </h1>
             <p class="max-w-3xl text-lg text-balance text-ink-muted lg:text-xl">
-              The personal financial app for a clearer view of your money. Track investments,
-              bank balances and crypto together in one read-only dashboard.
+              Finon is a free UK personal financial app for iPhone and Android. Track
+              investments, bank balances and crypto together in one read-only dashboard.
             </p>
             <div class="mt-2 flex flex-col items-center gap-3">
               <ActionButton />
